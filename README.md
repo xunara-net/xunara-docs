@@ -1,38 +1,73 @@
-# Xunara 文档索引
+# xunara-docs
 
-文档正文随主仓库 [xunara](https://github.com/xunara-net/xunara) 维护，本仓库只做入口，
-避免出现两个版本的规格。
+Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全与用户手册。代码在各自的
+仓库里，本仓库不承载业务代码，也**不复制**会在别处变化的接口细节——只做权威入口与
+长期规格存放地。
 
-## 规格与进度
+## 仓库地图
 
-- [PROJECT_SPEC.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/PROJECT_SPEC.md)
-  — 产品与协议规格（§1–§52）
-- [ROADMAP.md](https://github.com/xunara-net/xunara/blob/master/ROADMAP.md)
-  — 里程碑与进度（M1–M45，v1/v2 全部完成）
-- [IDENTITY_LOGIN.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/IDENTITY_LOGIN.md)
-  — 身份与登录设计（Provider、Session、设备授权、Passkey）
-- [REFERENCE_SOURCES.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/REFERENCE_SOURCES.md)
-  — 参考实现来源与使用边界
+| 仓库 | 职责 | 状态 |
+|---|---|---|
+| [xunara-server](https://github.com/xunara-net/xunara-server) | Tailscale 兼容控制面 + 产品 API（用户/组织/套餐/审计），不含 Web UI | v0.1 |
+| [xunara-web](https://github.com/xunara-net/xunara-web) | 用户控制台（Vue 3 + TS） | v0.1 |
+| [xunara-admin](https://github.com/xunara-net/xunara-admin) | 超级管理员后台（Vue 3 + TS） | v0.1 |
+| [xunara-relay](https://github.com/xunara-net/xunara-relay) | DERP/STUN 中继与托管注册协议 | v0.1 |
+| [xunara-deploy](https://github.com/xunara-net/xunara-deploy) | systemd / nginx / Docker Compose 部署 | v0.1 |
+| [xunara-docs](https://github.com/xunara-net/xunara-docs) | 本仓库：规范与文档 | — |
 
-## 开发规则
+完整规划（含未来 `xunara-client`、`xunara-cli`、`xunara-sdk`、`xunara-policy`、
+`xunara-network-tools`、`xunara-infrastructure`）见 [REPOSITORIES.md](REPOSITORIES.md)。
 
-- [AGENTS.md](https://github.com/xunara-net/xunara/blob/master/AGENTS.md)
-  — 协议参考优先级、身份分离、Secret 处理、测试要求
-- [README.md](https://github.com/xunara-net/xunara/blob/master/README.md)
-  — 项目定位、能力概览与构建运行
+## 先读什么
 
-## 文档主题速查
+1. [AI_DEVELOPMENT.md](AI_DEVELOPMENT.md) — AI/人类开发者的操作入口：工作流、输出格式、
+   Definition of Done、永久红线。**改代码前必读。**
+2. [specs/ai-development-architecture.md](specs/ai-development-architecture.md) — 《Xunara AI
+   长期开发与架构规范》全文（§1–§112）：产品模型、用户中心、套餐、权限、Admin、API。
+3. [specs/github-multi-repo-relay-ecosystem.md](specs/github-multi-repo-relay-ecosystem.md) —
+   《GitHub 多仓库、中继平台与长期生态架构》全文（§1–§125）：仓库边界、Relay 平台、
+   CI/CD、发布与兼容矩阵。
+4. [docs/architecture/README.md](docs/architecture/README.md) — 架构总览（三层模型、多租户、
+   依赖方向、数据归属）。
+5. [CONTRIBUTING.md](CONTRIBUTING.md) — 分支、提交信息、发布与版本兼容。
 
-| 主题 | 位置 |
+## 目录
+
+```text
+specs/          规格全文（长期规范、补充规范、PROJECT_SPEC、身份登录、Roadmap、参考来源）
+adr/            架构决策索引（正文随各仓库 docs/adr/ 维护）
+docs/user/      用户手册（控制台、设备、网络、权限）
+docs/admin/     超管手册（用户、套餐、租户、中继、审计、Break Glass）
+docs/developer/ 开发者指南（仓库边界、依赖方向、测试、Releases）
+docs/api/       API 概览与版本策略
+docs/deployment/部署（systemd / Docker / nginx 同源）
+docs/relay/     中继平台规格与运维
+docs/client/    客户端（官方客户端兼容 + 未来 Xunara Client）
+docs/security/  安全红线（身份、Secret、Session、租户隔离、审计）
+docs/architecture/ 架构总览
+docs/operations/   运维（备份、灾备、灰度、监控、告警）
+docs/troubleshooting/ 排障手册
+```
+
+## 规格文档的来源
+
+`specs/` 下的文件是**权威规格**，只允许追加与勘误，不允许为了配合实现而改写：
+
+| 文件 | 来源 |
 |---|---|
-| 项目定位与产品体系 | PROJECT_SPEC §1、§19 |
-| 协议边界与兼容要求 | PROJECT_SPEC §2–§4 |
-| 身份、OIDC、Session、设备授权 | PROJECT_SPEC §6–§17；IDENTITY_LOGIN.md |
-| Web Console 覆盖范围 | PROJECT_SPEC §20 |
-| 各功能规格（Atlas/Flux/Reach/Share/TKA…） | PROJECT_SPEC §22–§49 |
-| 目录导入声明字段（Consul/K8s） | PROJECT_SPEC §49 |
-| Web Console 现代化（设计系统/暗色/响应式/a11y） | PROJECT_SPEC §50 |
-| Web Console 中英双语、蓝/墨绿双主题、本地时区 | PROJECT_SPEC §51 |
-| 门面（首页/登录/注册）与首次初始化、邀请注册 | PROJECT_SPEC §52；deploy/README.md |
-| 部署（systemd 单元、安装升级、状态备份、HTTPS/通行密钥前置） | deploy/README.md |
-| 进度与已知限制 | ROADMAP.md |
+| `ai-development-architecture.md` | 用户提供的《Xunara AI 长期开发与架构规范》 |
+| `github-multi-repo-relay-ecosystem.md` | 用户提供的《Xunara AI 开发规范补充》 |
+| `project-spec.md` | 原主仓库 `Xunara_AI_Development_Docs_2026-10-05/PROJECT_SPEC.md` |
+| `identity-login.md` | 原主仓库 `IDENTITY_LOGIN.md` |
+| `reference-sources.md` | 原主仓库 `REFERENCE_SOURCES.md` |
+| `roadmap.md` | 原主仓库 `ROADMAP.md` |
+
+实现与规格冲突时：**以规格为准**，并提 Architecture Change Proposal（见
+[AI_DEVELOPMENT.md](AI_DEVELOPMENT.md)），而不是让代码悄悄定义标准。
+
+## 相关仓库
+
+- 控制面：[xunara-server](https://github.com/xunara-net/xunara-server)
+- 前端：[xunara-web](https://github.com/xunara-net/xunara-web) · [xunara-admin](https://github.com/xunara-net/xunara-admin)
+- 中继：[xunara-relay](https://github.com/xunara-net/xunara-relay)
+- 部署：[xunara-deploy](https://github.com/xunara-net/xunara-deploy)

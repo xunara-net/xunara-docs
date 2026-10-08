@@ -1,0 +1,37 @@
+name: docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Required documents exist
+        run: |
+          set -eu
+          for f in README.md AI_DEVELOPMENT.md REPOSITORIES.md CONTRIBUTING.md SECURITY.md adr/README.md \
+                   specs/ai-development-architecture.md specs/github-multi-repo-relay-ecosystem.md \
+                   specs/project-spec.md specs/identity-login.md specs/reference-sources.md specs/roadmap.md \
+                   docs/architecture/README.md docs/api/README.md docs/security/README.md \
+                   docs/relay/README.md docs/deployment/README.md docs/operations/README.md \
+                   docs/user/README.md docs/admin/README.md docs/developer/README.md \
+                   docs/client/README.md docs/troubleshooting/README.md; do
+            test -s "$f" || { echo "missing or empty: $f"; exit 1; }
+          done
+
+      - name: Relative links resolve
+        run: python3 .github/check_links.py
+
+      - name: Specs are append-only
+        run: |
+          # 规格正文不允许被截断：两份权威规范必须保留各自的章节骨架。
+          grep -q '^# 110\. 永久架构红线' specs/ai-development-architecture.md
+          grep -q '^# 120\. 当前第一阶段真正需要的仓库' specs/github-multi-repo-relay-ecosystem.md

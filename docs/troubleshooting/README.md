@@ -1,0 +1,33 @@
+# 排障手册
+
+先收集三件事实：**控制面进程状态**、**`/health` 返回**、**nginx/上游日志**。
+
+## 常见问题
+
+| 现象 | 排查 |
+|---|---|
+| 浏览器 502 / 空白页 | `systemctl status xunarad`；`curl -fsS http://127.0.0.1:9090/health`；确认 nginx 上游端口与单元一致 |
+| 登录后立刻掉线 | 控制台必须与 API 同源（Cookie SameSite=Lax）；检查是否把 `xunara-web` 部署到了别的域名 |
+| 登录报 OIDC 回调错误 | `-server-url` 与浏览器地址不一致；检查 OIDC 回调 allowlist 与 clock skew |
+| `/admin/` 404 | 未安装 admin dist（`install-web.sh` 第二个参数），或 nginx 的 `/admin/` location 被覆盖 |
+| 客户端一直「连接中」/ `Starting` | netmap 中没有可用 DERP：检查 `-derp-map`、9091 公网可达、`derp.json` 指纹是否最新 |
+| 设备注册被拒 | 超出套餐设备上限（`DEVICE_LIMIT_REACHED`）；或注册审批未通过（控制台「我的设备」） |
+| 平台 API 401/403 | `XUNARA_PLATFORM_ADMIN_TOKEN` 未配置（默认 fail closed）或令牌错误 |
+| 权限不生效 | 规则必须最终经 Policy Compiler；检查是否只改了可视化层未提交，或 Route/Permission 用错 |
+| 升级后二进制没变 | 运行中的二进制被 systemd 占用：先 `systemctl stop xunarad` 再安装 |
+| 中继启动即退出 | 中继 fail closed：控制面不可达或准入被拒；`journalctl -u xunara-relay -n 50` |
+
+## 日志与诊断
+
+```sh
+journalctl -u xunarad -n 200 --no-pager
+journalctl -u xunara-relay -n 200 --no-pager
+curl -fsS http://127.0.0.1:9090/health
+curl -fsS http://127.0.0.1:9090/version
+nginx -t && tail -n 100 /var/log/nginx/error.log
+```
+
+## 取证注意
+
+日志与工单里不要粘贴：节点密钥、预认证密钥、Session Cookie、Relay 身份文件、
+`setup-token`、平台令牌。复制前先脱敏。
