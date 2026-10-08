@@ -6,9 +6,9 @@
 ## 规格与进度
 
 - [PROJECT_SPEC.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/PROJECT_SPEC.md)
-  — 产品与协议规格（§1–§51）
+  — 产品与协议规格（§1–§52）
 - [ROADMAP.md](https://github.com/xunara-net/xunara/blob/master/ROADMAP.md)
-  — 里程碑与进度（M1–M44，v1/v2 全部完成）
+  — 里程碑与进度（M1–M45，v1/v2 全部完成）
 - [IDENTITY_LOGIN.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/IDENTITY_LOGIN.md)
   — 身份与登录设计（Provider、Session、设备授权、Passkey）
 - [REFERENCE_SOURCES.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/REFERENCE_SOURCES.md)
@@ -33,5 +33,6 @@
 | 目录导入声明字段（Consul/K8s） | PROJECT_SPEC §49 |
 | Web Console 现代化（设计系统/暗色/响应式/a11y） | PROJECT_SPEC §50 |
 | Web Console 中英双语、蓝/墨绿双主题、本地时区 | PROJECT_SPEC §51 |
+| 门面（首页/登录/注册）与首次初始化、邀请注册 | PROJECT_SPEC §52；deploy/README.md |
 | 部署（systemd 单元、安装升级、状态备份、HTTPS/通行密钥前置） | deploy/README.md |
 | 进度与已知限制 | ROADMAP.md |
