@@ -33,4 +33,5 @@
 | 目录导入声明字段（Consul/K8s） | PROJECT_SPEC §49 |
 | Web Console 现代化（设计系统/暗色/响应式/a11y） | PROJECT_SPEC §50 |
 | Web Console 中英双语、蓝/墨绿双主题、本地时区 | PROJECT_SPEC §51 |
+| 部署（systemd 单元、安装升级、状态备份、HTTPS/通行密钥前置） | deploy/README.md |
 | 进度与已知限制 | ROADMAP.md |
