@@ -64,5 +64,7 @@ Systemd）、注册、配置、升级、卸载、故障排查。
 ## 当前状态
 
 `xunara-relay` v0.1 已实现 DERP/STUN 数据面、自签名证书与 DERP map 生成、准入
-fail closed、限速、托管注册与心跳客户端；控制面的 `/api/relay/v1/*` 服务端实现与
-后台中继管理页面属于后续里程碑。
+fail closed、限速、托管注册与心跳客户端；`xunara-server` 已实现 `/api/relay/v1/enroll`
+与 `/api/relay/v1/heartbeat`、期望状态/限速/区域名下发、`plan.MaxRelays` 配额
+（Free 1 / Pro 5 / Business 20）以及租户与平台两级中继管理 API（ADR-0006）。
+控制台/超管后台的中继管理页面属于后续里程碑。

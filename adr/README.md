@@ -21,6 +21,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0003](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0003-server-web-split.md) | 服务端与 Web UI 分离（内嵌 console 迁移中） | xunara-server | Accepted（迁移中） | 2026-10-09 |
 | [ADR-0004](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md) | 套餐能力通过 Entitlement 强制，而不是散落的 if | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0005](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0005-tenant-network.md) | 租户网段由 Network Allocation Service 分配 | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0006](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0006-relay-platform.md) | 中继平台的服务端实现（注册 / 心跳 / 配额） | xunara-server | Accepted | 2026-10-09 |
 
 ## 模板
 
@@ -49,6 +50,5 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 
 ## 待补 ADR（候选）
 
-- Relay 托管注册与心跳的服务端契约落地（`/api/relay/v1/*`）。
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。
 - 内嵌 console 删除与服务端只提供 API 的最终形态（ADR-0003 的收尾）。
