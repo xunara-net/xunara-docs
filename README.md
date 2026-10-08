@@ -6,9 +6,9 @@
 ## 规格与进度
 
 - [PROJECT_SPEC.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/PROJECT_SPEC.md)
-  — 产品与协议规格（§1–§45）
+  — 产品与协议规格（§1–§50）
 - [ROADMAP.md](https://github.com/xunara-net/xunara/blob/master/ROADMAP.md)
-  — 里程碑与进度（M1–M38，v1 全部完成）
+  — 里程碑与进度（M1–M43，v1/v2 全部完成）
 - [IDENTITY_LOGIN.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/IDENTITY_LOGIN.md)
   — 身份与登录设计（Provider、Session、设备授权、Passkey）
 - [REFERENCE_SOURCES.md](https://github.com/xunara-net/xunara/blob/master/Xunara_AI_Development_Docs_2026-10-05/REFERENCE_SOURCES.md)
@@ -29,5 +29,7 @@
 | 协议边界与兼容要求 | PROJECT_SPEC §2–§4 |
 | 身份、OIDC、Session、设备授权 | PROJECT_SPEC §6–§17；IDENTITY_LOGIN.md |
 | Web Console 覆盖范围 | PROJECT_SPEC §20 |
-| 各功能规格（Atlas/Flux/Reach/Share/TKA…） | PROJECT_SPEC §22–§45 |
+| 各功能规格（Atlas/Flux/Reach/Share/TKA…） | PROJECT_SPEC §22–§49 |
+| 目录导入声明字段（Consul/K8s） | PROJECT_SPEC §49 |
+| Web Console 现代化（设计系统/暗色/响应式/a11y） | PROJECT_SPEC §50 |
 | 进度与已知限制 | ROADMAP.md |
