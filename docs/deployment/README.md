@@ -200,6 +200,11 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 
 ## 同源是硬要求
 
+一次性初始化、独立租户 owner 开通与登录配置故障恢复的最新发布状态见
+[一次性初始化验收](2026-10-10-atomic-owner-bootstrap.md)。本轮追加身份 v13；旧版本
+不能直接读取新版数据库。回退须在恢复公网写流量前同时恢复旧产物和完整一致性
+状态，不得仅替换旧二进制，也不得在线用旧快照覆盖已接收新业务的状态。
+
 新旧密码入口的故障收敛、验证及发布状态见
 [密码登录验收](2026-10-09-password-login-consolidation.md)。此切片不改前端静态产物、
 套餐或客户端协议，仍需服务端提交的最终 CI 和可回滚升级验收。
@@ -222,8 +227,12 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 
 ## 首次初始化
 
-全新部署没有管理员密码：用服务写出的一次性令牌（`/var/lib/xunara/setup-token`）在
-`/setup` 创建 owner 账号，之后令牌文件立即删除，审计记录 `admin.bootstrap`。
+全新部署没有管理员密码：用服务写出的 `0600` 一次性证明（默认状态目录下的
+`setup-token`）在 `/setup` 认领内置 owner。完成事实、资料、密码、会话及必需审计
+同事务提交，成功后清理证明文件；限流或存储故障不留下半初始化，可在恢复后重试。
+已完成的初始化不会因删除密码、遗留证明或重启而重新开放；`/setup` 不是密码重置。
+启动无法确认初始化状态或安全发布证明时拒绝启动。不要打印证明或改权限绕过检查，
+行为以 [ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) 为准。
 
 ## 中继归属
 

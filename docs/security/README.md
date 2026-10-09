@@ -62,6 +62,23 @@ JSON 和兼容 HTML 密码入口共用同一业务服务。限流、密码登录
 范围与仍需复核的启动初始化/其他历史调用见
 [ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md)。
 
+## 一次性初始化
+
+本地开通认领原有内置 owner，不创建占用 Free 成员名额的第二个账号。初始化完成
+事实、资料、密码、会话和必需成功审计同事务提交；失败整体回滚，不按邮箱猜身份，
+保留既有外部身份链接。两个数据库连接竞争也只能成功认领一次。
+
+初始化状态、限流或证明存储故障失败关闭；JSON/HTML 元数据与门禁不误报未初始化，
+不清 Cookie。Web 确认有效登录配置前不显示可用入口，故障可重试而不是猜默认策略。
+文件证明完整原子发布为 `0600`，异常文件不静默替换。数据库完成事实不可通过删除
+密码、残留证明或重启撤销；`/setup` 不能充当密码重置或灾难恢复接口。
+
+新增身份 v13 的历史事实回填与受控回退见
+[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md)。
+占位用户播种、成功密码登录审计、第三方首次建号及平台跨库可靠补偿仍需单独收敛，
+不得据此宣称全部身份写入已原子化。缺少历史凭据和完成审计的状态需要运维核对，
+不能从用户名、邮箱或机器身份猜测完成事实。
+
 ## 租户隔离（规范 §12、§86）
 
 租户边界覆盖：User、Machine、Node、Device、Route、ACL、Grant、Auth Key、API Key、

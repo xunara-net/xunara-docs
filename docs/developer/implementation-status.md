@@ -1,6 +1,6 @@
 # 实现与审查台账
 
-更新：2026-10-09。范围为 `xunara-net` 组织的六个现有仓库。
+更新：2026-10-10。范围为 `xunara-net` 组织的六个现有仓库。
 
 ## 判断规则
 
@@ -37,11 +37,12 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 模块 | 现状与证据 | 尚缺事项 |
 |---|---|---|
 | 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/导出工作流、通知与账户生命周期 |
-| 密码/邀请/注册模式 | 已实现切片，入口共享策略；本地成员注册将额度、账户、凭据、身份链接、邀请、会话和审计原子提交；[ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md) | 独立租户 owner 认领、第三方/管理员其他创建点仍需复核；邮箱验证、找回、验证码及完整恢复策略未完成 |
+| 密码/邀请/注册模式 | 已实现切片，入口共享策略；本地成员注册将额度、账户、凭据、身份链接、邀请、会话和审计原子提交；[ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md) | 第三方/管理员其他创建点仍需复核；邮箱验证、找回、验证码及完整恢复策略未完成 |
+| 初始化与独立租户 owner | 已实现一次性完成事实、内置 owner 认领、密码、会话和必需审计的同事务提交；故障零部分身份、允许重试，删除密码或残留证明不能重新开通；[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 初始占位用户播种仍非本事务；平台组织/套餐跨库可靠补偿、响应丢失恢复及完整账号恢复未完成 |
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session | 持久会话、单个/批量撤销、事务审计；[撤销 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 多实例部署验收、完整设备/地点/最后活动登录记录；旧只读适配仍需逐步收敛 |
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
-| 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；密码存储故障不放行、不清 Cookie 或跳转初始化；[ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md) | 成功登录审计仍在提交后执行；启动初始化及其他旧元数据读取/写入仍需复核，不能据此宣称全部认证路径已失败关闭 |
+| 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；密码存储故障不放行、不清 Cookie 或跳转初始化；[ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md) | 成功登录审计仍在提交后执行；其他旧元数据读取/写入仍需复核，不能据此宣称全部认证路径已失败关闭 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
 | OAuth/OIDC | 持久事务和提供方验证；正式 API 下浏览器入口与旧书签转接已消除 SPA 遮蔽，本地真实 RSA/JWKS/PKCE 同源浏览器验收通过；[登录代码](https://github.com/xunara-net/xunara-server/blob/main/control/login.go) | 公网提供方/固定 HTTPS 验收、第三方首次建号的配额/身份链接/审计原子性仍未闭环；夹具不等于生产第三方配置 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
@@ -66,6 +67,9 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 重点阅读并跟踪认证存储 → 身份解析 → HTTP/gRPC 门禁 → Web 启动，以及平台中继 API
 → 注册事务/心跳契约 → 超管交互的实际数据流；核对用户设备、成员、DNS、路由、网络、
 权限页面。中继写入复核包括内存实现、SQLite 即时事务、单次凭据和跨连接并发。
+本轮继续跟踪启动初始化、文件证明、公开认证元数据、HTML 门禁、邀请门禁及自助
+开租户的限流 → 身份事务 → 文件/Cookie → 平台补偿，并核对 v12 到 v13 的迁移及
+旧产物与一致性状态的隔离回退。前端检查登录配置从读取、校验到启用入口的数据流。
 
 尚不能声称所有生产源码和历史测试都已逐行审查。旧扩展模块、存储全部写事务、设备
 并发注册、权限编译器全部分支、部署全部安装路径、外部身份全回调分支仍需专项复核。
@@ -140,9 +144,35 @@ SQL；删掉两份重复业务，不删除尚有调用方的兼容入口。新�
 与 `145806e`，静态校验和未变。原有两租户、状态、套餐、配置和中继指纹保留，
 公网匿名与授权平台只读验收通过，不修改生产密码或注入数据库故障。
 
+## 本轮补充：一次性初始化与登录配置恢复
+
+真实 SQLite 回归先复现初始化限流故障仍放行、元数据误报未初始化和认领写入失败
+留下部分身份，再删除分步认领、重复会话/审计以及隐藏错误的初始化布尔门禁。
+初始化与自助 owner 共用身份事务；限流/状态/证明读取故障失败关闭。文件证明通过
+完整 `0600` 临时文件原子发布，完成后只作清理，不作为可重开的初始化事实。
+
+自助开通失败在组织成功退出后释放套餐和网络分配，取消请求也执行有界清理；
+跨库清理失败明确记录，不冒充全局事务或可靠持久 reconciliation。
+Web 只有确认有效登录配置后才启用入口；读取失败或畸形载荷保留目标并可重试。
+
+最终服务端 build、vet、全量 test/race 通过，owner/迁移/失败开通专项 race 重复
+20 次通过；Web 106 项、Admin 25 项及类型检查/构建通过。最终发布产物的
+25 阶段 Chromium 回归通过、JS 错误为零，真实旧版本隔离状态的 v12 → v13 及
+旧二进制配套旧状态回退演练通过。对应 CI、调试升级与只读验收状态单独记录在
+[一次性初始化验收](../deployment/2026-10-10-atomic-owner-bootstrap.md)。
+
+对应四仓库 CI 全部通过后，将服务端 `65cba43`、Web `514467c` 与 Admin `5feaf54`
+的最终产物升级到调试站。维护窗口一致性备份后迁移两个活动租户到身份 v13，
+原身份、凭据、链接、设备、套餐、网段与受保护配置保留；公网匿名浏览器及授权
+平台只读验收通过。没有执行生产回退或再次进行外部客户端数据面实测。
+
+本轮**追加身份迁移 v13**；成功 API 载荷、官方客户端协议、套餐额度和 Headscale
+均未修改。初始占位用户播种、成功密码登录审计、第三方首次建号及完整恢复策略
+仍未闭环，不把本切片扩展为全部认证完成，也不将本地 OIDC 夹具当作公网配置。
+
 ## 后续顺序
 
-1. 安全/一致性：补成功登录/注册审计与其他资源配额原子性，复核启动初始化和历史元数据/身份读取，收敛跨面授权校验。
+1. 安全/一致性：补成功登录/注册审计与其他资源配额原子性，复核初始占位用户播种、历史元数据/身份读取和跨库可靠补偿，收敛跨面授权校验。
 2. 完整认证链路：补第三方首次建号事务、公网提供方/固定 HTTPS、多实例与恢复验收；
    先 Proposal 后实现邮箱验证、找回与 2FA，不把未验证邮箱作为身份键。
 3. 前端对等：继续收敛其他页面加载错误，补 DNS 写接口/表单、用户私有中继管理及完整 RBAC。

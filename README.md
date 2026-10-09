@@ -46,6 +46,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 [认证与成员邀请验收](docs/deployment/2026-10-09-browser-auth-member-invitations.md)。
 密码登录失败关闭、旧业务收敛及本轮验证状态见
 [密码登录验收](docs/deployment/2026-10-09-password-login-consolidation.md)。
+最新初始化、独立租户 owner 原子开通、登录配置故障恢复与身份 v13 升级边界见
+[一次性初始化验收](docs/deployment/2026-10-10-atomic-owner-bootstrap.md)。
 
 ## 目录
 

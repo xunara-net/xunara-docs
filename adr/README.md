@@ -32,6 +32,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md) | 正式浏览器认证入口与原子成员邀请 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0015](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0015-self-service-external-admission.md) | 自助入口禁止第三方隐式加入共享网络 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md) | 密码登录共用业务路径与失败关闭 | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 本地 owner 的一次性原子初始化 | xunara-server | Accepted | 2026-10-09 |
 
 ## 模板
 
