@@ -2827,8 +2827,9 @@ handler 数据语义与既有存储结构不变。
 
 ### 52.8 明确不做（v2）
 
-- 不做公开自助注册、不做邮箱验证/找回密码（无邮件基础设施）；忘记密码由
-  管理员重置或重新初始化处理。
+- 不做公开自助注册（该边界已由 §55 的平台级自助开通扩展：注册策略是部署
+  配置 closed/invite/open，而非写死）、不做邮箱验证/找回密码（无邮件基础设施）；
+  忘记密码由管理员重置或重新初始化处理。
 - 不引入外部 IdP 之外的新身份源；不改 Tailscale 协议字段、`/api/v2` 语义与
   既有审计字段（新增审计动作除外）。
 - 不在 Console 里显示邀请明文（只在创建响应里出现一次）。
@@ -2934,3 +2935,27 @@ SHA-256 指纹，官方客户端据此替代 CA 校验。除指纹机制外不�
 - 身份面分离：租户控制台 `/console`（会话 + CSRF）与平台控制台 `/admin`
   （平台令牌登录、独立会话表 admin_sessions、每会话 CSRF）互不通用。
 - 平台 API：`/api/platform/v1/plans`、`/organizations/{id}/plan`。
+
+## 55. 自助注册与多租户自动开通（M49）
+
+- 注册策略 `RegistrationMode = closed | invite | open`（默认 invite）是
+  **部署级配置**：HTML `/signup`、JSON `/api/v1/auth/signup`、控制台能力位
+  （`auth.register.invite` / `auth.register.open`）与 providers 负载读同一个值；
+  仅 OIDC 的部署（无本地登录）强制 closed。
+- 开放注册的语义随部署形态而定：
+  - 单租户部署：注册者是该租户的 `member`，受套餐成员配额约束（Free=1，
+    因此 Free 单租户部署实际上仍邀请制）；
+  - 托管部署（`-org-config` 配 `self_service`）：注册即开通一个新租户，
+    注册者成为新租户 `owner`，网络空间与既有租户完全隔离。
+- 开通链路（Router 执行，见 ADR-0007）：组织行 → 套餐分配 → 地址池块下发
+  → 成员配额校验 → 认领内置本地账号（ID=1，避免烧掉 Free 的 max_users=1）
+  → 会话与 Cookie → 审计；任一步失败调用 `DeleteManagedOrg` 全量回滚。
+- 端点：`POST /api/self-service/v1/signup`（仅入口站主机应答，其余主机回落到
+  该组织自己的控制面）；入口站限流 5 租户/小时/IP。
+- 配置面：`-registration`（单租户）；`-org-config` 的 `registration` 与
+  `self_service{site, domain_suffix, scheme, cookie_domain, plan}`（多租户）。
+  `self_service` 要求入口站 `registration=open` 且部署已启用
+  `-platform-state-dir` 与 `-plans`，否则启动即失败（fail closed）。
+- 域名：租户域名为 `<org>.<domain_suffix>`，需要泛解析；`cookie_domain`
+  可让注册会话跨到租户域名（handoff），未配置时降级为新域名重新登录。
+- 明确不做（本阶段）：邮箱验证、图形验证码、计费回调；自助注销留待后续。

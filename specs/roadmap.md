@@ -2066,3 +2066,21 @@ Tests
   总览、租户、用户、套餐编辑器。
 - 用户中心 `/console/plan`：当前套餐、用量、网段与能力清单。
 - `xunarad -plans <file>` / `-network-pool <cidr>`；自托管默认关闭。
+
+## M49 — 自助注册与多租户自动开通（已完成）
+
+- `control/registration.go`：注册策略 closed / invite / open（默认 invite），
+  所有注册入口与能力位读同一值；OIDC-only 部署强制 closed。
+- `control/selfservice.go`：`POST /api/self-service/v1/signup` 在入口站一次性
+  完成「建组织 → 分配套餐 → 下发地址池块 → 配额校验 → 认领内置 owner →
+  建会话 → 审计」，失败全量回滚；限流 5 租户/小时/IP。
+- `control/account.go`：`claimLocalAccount` 统一 /setup 与新租户 owner 的账号
+  认领，Free（max_users=1）不再被占位账号烧掉配额。
+- 配置：`-registration`、`-org-config` 的 `registration` 与
+  `self_service{site, domain_suffix, scheme, cookie_domain, plan}`。
+- 控制台：注册页按 closed / invite / open 与 self_service 渲染；开放 + 托管
+  部署直接调平台端点建租户并按 `organization.url` 跳转。
+- 修复：平台 `/plan/allocate` 误用自定义网段路径（SetTenantNetwork）导致
+  Free 租户分配失败。
+- 测试：注册策略矩阵、自助开通全链路（含配额回滚、非入口 404、Cookie 域）、
+  配置解析；`go test ./...` 与 `-race` 全绿，前端 vue-tsc + vitest 通过。

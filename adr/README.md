@@ -22,6 +22,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0004](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md) | 套餐能力通过 Entitlement 强制，而不是散落的 if | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0005](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0005-tenant-network.md) | 租户网段由 Network Allocation Service 分配 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0006](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0006-relay-platform.md) | 中继平台的服务端实现（注册 / 心跳 / 配额） | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0007](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md) | 自助注册即开租户（托管部署的账户模型） | xunara-server | Accepted | 2026-10-09 |
 
 ## 模板
 

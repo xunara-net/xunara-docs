@@ -68,6 +68,40 @@ curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:9090/api/v1/overview  
   联网售卖时用超管后台把租户调到 Pro/Business。
 - `/console` 是控制面内嵌的旧版控制台，仍然可用；正式入口是 `/` 与 `/admin/`。
 
+## 多租户与自助注册
+
+注册策略由 `-registration` 决定：`closed`（只允许管理员建号）、`invite`（邀请码，
+默认）、`open`（任何人可注册，spec §55）。单租户部署的开放注册得到的是本租户
+`member`；托管部署要走「注册即开独立 tailnet」，需要三件套一起配：
+
+```json
+{
+  "organizations": [
+    {"id": "portal", "name": "Xunara Cloud", "domains": ["app.example.com"],
+     "server_url": "https://app.example.com", "state_dir": "/var/lib/xunara/portal",
+     "registration": "open"}
+  ],
+  "self_service": {
+    "site": "portal",
+    "domain_suffix": "tailnet.example.com",
+    "scheme": "https",
+    "cookie_domain": "example.com",
+    "plan": "free"
+  }
+}
+```
+
+```sh
+XUNARA_EXTRA_ARGS="-org-config /etc/xunara/orgs.json \
+  -platform-state-dir /var/lib/xunara/platform -plans builtin"
+```
+
+- 入口站必须 `registration=open`，否则启动报错（控制台与 API 不允许互相矛盾）。
+- `*.domain_suffix` 需要泛解析到同一入口（nginx `server_name _` 已接受任意 Host）；
+  新租户状态目录在 `-platform-state-dir/orgs/` 下自动创建，备份必须包含它。
+- `cookie_domain` 让注册后的会话跨到租户域名；不配置则到新域名重新登录一次。
+- 入口站限流 5 租户/小时/IP；删除租户走平台 API。
+
 ## 同源是硬要求
 
 用户控制台使用 HttpOnly + SameSite=Lax 的会话 Cookie，**必须**与控制面 API 同源。
