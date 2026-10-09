@@ -10,7 +10,7 @@
 | `/api/v2/*` | 会话 Cookie / API Key | 产品能力：meta、organization、TKA、DERP、policy、security、exit-nodes、relays、serve、devices、machines、services、flux、reach、audit、agent-tokens、webhooks、shares |
 | `/api/platform/v1/*` | `XUNARA_PLATFORM_ADMIN_TOKEN`（Bearer） | 平台管理：organizations、plans、audit、跨租户用户管理 |
 | `/api/agent/v1/*` | Agent Token | 原生客户端协议 |
-| gRPC `xunara.v2.PlatformService` / `PlatformAdminService` | 平台令牌 | 默认监听 `127.0.0.1:9191`，fail closed |
+| gRPC `xunara.v2.PlatformService` / `PlatformAdminService` | 前者为租户 Session/API Key 的 Bearer；后者为平台令牌 | 默认监听内网，身份与权限分别验证，fail closed |
 | `/key`、`/ts2021`、`/machine/*`（Noise 内） | 无需会话（协议自证） | 官方 Tailscale 客户端接入 |
 
 ## 认证方式
@@ -29,13 +29,15 @@ Secret 规则：不放 URL query、不放命令行、不进日志（规范 §8�
 - URL 版本化：破坏性变更走新前缀（`/api/v3`），旧版本保留迁移窗口。
 - `Capability API` 暴露服务端能力位，前端不得靠版本号猜功能。
 - 官方客户端协议字段（MapRequest/MapResponse/NodeKey/…）不得为了产品需求改动。
-- 前端类型从 OpenAPI 生成，web / admin / 未来 client 共享同一份 Domain Layer。
+- OpenAPI 生成类型与共享 Domain Layer 是目标；当前 web/admin 采用按端点手写适配与契约测试，尚未实现生成链路。
 
 ## 错误约定
 
 - HTTP 状态码表达类别：`400` 参数、`401` 未认证、`403` 权限/套餐受限、`404`、`409` 冲突、`429` 限速、`5xx` 服务端。
 - 套餐受限返回可识别的错误码（如 `DEVICE_LIMIT_REACHED`），前端据此展示升级引导。
 - 错误响应不包含 Secret、密钥、内部路径与租户边界之外的信息。
+- 身份存储不可用返回可重试错误，不伪装成未登录：HTTP 503、gRPC Unavailable；
+  前端不因此清理有效凭据。详见 [ADR-0012](../../adr/README.md)。
 
 ## 契约位置
 

@@ -1,5 +1,8 @@
 # 开发者指南
 
+当前交付与规格差距、已审查模块和逐项完成标准见
+[实现与审查台账](implementation-status.md)，不要只凭历史里程碑决定下一步。
+
 ## 仓库与依赖
 
 见 [REPOSITORIES.md](../../REPOSITORIES.md)。核心约束：单向依赖、无循环依赖、

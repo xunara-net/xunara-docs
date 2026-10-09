@@ -67,4 +67,7 @@ Systemd）、注册、配置、升级、卸载、故障排查。
 fail closed、限速、托管注册与心跳客户端；`xunara-server` 已实现 `/api/relay/v1/enroll`
 与 `/api/relay/v1/heartbeat`、期望状态/限速/区域名下发、`plan.MaxRelays` 配额
 （Free 1 / Pro 5 / Business 20）以及租户与平台两级中继管理 API（ADR-0006）。
-控制台/超管后台的中继管理页面属于后续里程碑。
+超管后台已接入托管中继列表/筛选、一次性注册令牌、期望状态/限速/区域名和删除；
+用户侧管理、地图/成本、签名自动升级/灰度回滚仍未交付。配置版本号只区分期望配置，
+不代表已经提供配置历史回滚；最近心跳计数也不是可计费用量账本。详见
+[超管手册](../admin/README.md)与[实现台账](../developer/implementation-status.md)。
