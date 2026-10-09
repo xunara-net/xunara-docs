@@ -41,6 +41,10 @@ Session 存储。控制面 Session 落状态目录，重启不掉登录，是水
 [服务端说明](https://github.com/xunara-net/xunara-server/blob/main/README.md#控制台登录管理)
 及 [ADR-0010](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) 为准。
 
+认证存储故障与无效凭据必须分开：不能把查询失败当作匿名、清除 Cookie 或报告退出
+成功。HTTP/gRPC 门禁失败关闭，Web 保留目标地址并允许重试；边界以
+[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) 为准。
+
 ## 租户隔离（规范 §12、§86）
 
 租户边界覆盖：User、Machine、Node、Device、Route、ACL、Grant、Auth Key、API Key、
@@ -59,6 +63,9 @@ AuthTransaction ≠ Session ≠ DeviceAuthorization
 - Relay 管理面与数据面分离；Relay 不代理业务 API，不保存核心用户数据库。
 - 私有 Relay 的准入必须 fail closed（控制面不可达即拒绝放行）。
 - Relay 流量统计遵循隐私最小化原则，不做 DPI（补充规范 §30、§31）。
+- 托管注册在同一事务内检查令牌和数量、创建服务身份并消费令牌，失败不烧掉凭据；
+  多个 SQLite 连接也必须遵守相同额度。已实现与未闭环的审计/恢复边界见
+  [ADR-0013](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0013-atomic-relay-enrollment.md)。
 
 ## 审计与 Break Glass（补充规范 §87–§89）
 
