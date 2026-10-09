@@ -51,3 +51,14 @@ Register / Poll / DNS / DERP / Capabilities / FeatureQuery 之前：读 upstream
 
 协议兼容、租户隔离、Session/Identity、并发路径必须覆盖测试；只加功能不加测试的 PR
 不予合入。
+
+## 中文注释与旧实现清理
+
+- 关键模块用中文解释身份/租户边界、事务原子性、挑战重放和兼容适配的原因，
+  不逐行翻译显而易见的语句，不把已删除的实现整段注释后保留。
+- 清理前搜索定义、生产调用与测试；功能对等后移除旧 UI 与重复业务逻辑。
+  已公开地址按弃用、提示、迁移和最终删除推进；必要兼容入口只适配传输与字段形状，
+  必须复用同一账户域逻辑，不能绕过权限或审计。实践见
+  [ADR-0011](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md)。
+- 官方客户端的浏览器授权及尚未完成独立 Web 对等的模块不能为“清理”直接删除。
+  修改已发布的数据库迁移、放宽协议或安全限制也不是合法的清理方式。

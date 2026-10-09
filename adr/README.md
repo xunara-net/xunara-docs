@@ -26,6 +26,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0008](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0008-managed-relay-admission.md) | 托管租户的公共中继配置与准入 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0009](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 账户自助资料、事务型改密与全部会话撤销 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0010](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 用户自助会话管理与事务型批量退出 | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0011](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 通行密钥迁移到独立 Web 与账户认证收敛 | xunara-server | Accepted | 2026-10-09 |
 
 ## 模板
 

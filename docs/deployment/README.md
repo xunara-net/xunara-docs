@@ -200,6 +200,10 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 
 ## 同源是硬要求
 
+通行密钥迁移、账户认证收敛与对应调试部署的最新版本、升级保护及实测边界见
+[2026-10-09 验收记录](2026-10-09-passkey-account-consolidation.md)。公网 HTTP 不能
+使用通行密钥；本地虚拟认证器验收不等于实体设备或生产 HTTPS 已完成。
+
 用户控制台使用 HttpOnly + SameSite=Lax 的会话 Cookie，**必须**与控制面 API 同源。
 `nginx/xunara.conf` 已经按同源写好；不要把 `xunara-web` 单独部署到另一个域名。
 

@@ -31,9 +31,11 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
    依赖方向、数据归属）。
 5. [CONTRIBUTING.md](CONTRIBUTING.md) — 分支、提交信息、发布与版本兼容。
 
-账户资料、改密与批量退出登录的已实现边界见 [用户手册](docs/user/README.md#账号安全)
-和 [ADR 索引](adr/README.md)（ADR-0009、ADR-0010）。
+账户资料、改密、批量退出与通行密钥的已实现边界见 [用户手册](docs/user/README.md#账号安全)
+和 [ADR 索引](adr/README.md)（ADR-0009、ADR-0010、ADR-0011）。
 邮箱验证、密码找回与 2FA 仍是待开发功能，不以规格规划代替当前能力。
+本轮清理、浏览器与官方 Linux 客户端的实测边界见
+[通行密钥迁移与账户认证收敛验收](docs/deployment/2026-10-09-passkey-account-consolidation.md)。
 
 ## 目录
 
