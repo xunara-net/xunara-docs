@@ -166,6 +166,38 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 与 [ADR-0009](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md)
 为准。此次仍是 HTTP 调试环境，不代表 HTTPS、邮箱验证、密码找回或 2FA 已完成。
 
+### 控制台登录管理验收（2026-10-09）
+
+部署版本：服务端
+[`e2068ac`](https://github.com/xunara-net/xunara-server/commit/e2068ac)，用户控制台
+[`6edb417`](https://github.com/xunara-net/xunara-web/commit/6edb417)。升级前备份二进制、
+静态入口和停止服务后的状态目录；升级不改组织配置、网段或中继证书指纹。
+
+- 升级前创建的三个浏览器登录在升级后仍可使用；Free 账户可自助退出单个、
+  其他及全部登录。“其他”实际退出两个并保留当前登录，“全部”实际退出三个，
+  当前浏览器返回登录页；退出当前登录也显示明确结果。
+- 缺失或错误 CSRF 被拒绝；跨租户令牌不能读取会话，其他租户的会话标识不能
+  被撤销。另一个临时租户的登录不受单个、其他和全部退出影响。
+- 取消确认不提交退出；页面注入列表读取和撤销失败时明确报错，刷新可恢复，
+  不显示为零活动登录或操作成功。安全概览读取失败也单独显示，不伪造正常状态。
+- 活动与失效记录分开，中文卡片替代原始 JSON；390px 页面无整体横向溢出，
+  浏览器无 JavaScript 页面错误。重新登录时失效的父域 Cookie 不遮蔽新主机 Cookie。
+- 两台官方 Linux 客户端 1.104.1 在退出登录后保留地址，并继续通过强制 DERP
+  完成加密网络内的 HTTP 传输。首次冷启动数据探测曾超时，客户端重连后复测通过；
+  之后的退出操作与重启回归传输均通过，未修改客户端协议。
+- 控制面重启后，当前有效登录、失效状态与原因、另一个租户的登录均保持；
+  原有设备、Free 配额和网段保持，两台客户端无需新预认证密钥即可重连并传输。
+- 两个临时测试租户随后归档，临时密码、会话 Cookie、预认证密钥及客户端状态
+  从测试端清理，原有 `default` 与 `team` 租户和数据保留。
+
+服务端构建、vet、全量测试及全量 `-race` 通过；前端 46 项测试、类型检查与
+生产构建通过。事务审计故障回滚、失效发起者拒绝及跨数据库连接的撤销/轮换竞争
+由自动化测试覆盖。接口以
+[服务端登录管理说明](https://github.com/xunara-net/xunara-server/blob/main/README.md#控制台登录管理)
+与 [ADR-0010](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md)
+为准。本记录不代表完整登录审计、来源设备元数据、2FA、HTTPS 或全平台兼容矩阵
+已经完成；当前仍是 HTTP 调试部署。
+
 ## 同源是硬要求
 
 用户控制台使用 HttpOnly + SameSite=Lax 的会话 Cookie，**必须**与控制面 API 同源。

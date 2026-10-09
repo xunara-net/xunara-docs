@@ -33,6 +33,14 @@ allowlist，禁止开放重定向。
 Session 必须考虑多实例、撤销、过期、审计、轮换；**禁止**使用进程内 map 作为核心
 Session 存储。控制面 Session 落状态目录，重启不掉登录，是水平扩展的前提。
 
+用户自助退出使用仅允许人类 Session 的账户接口，写请求校验 CSRF。
+单个目标必须属于本人；批量退出前在事务内重新确认发起会话仍有效，
+撤销与审计同事务。失败回滚，轮换不得复活已撤销登录。“其他”保留当前登录，
+“全部”包含当前登录，只影响操作时仍活动的会话，不修改机器身份或服务密钥。
+接口细节与并发边界以
+[服务端说明](https://github.com/xunara-net/xunara-server/blob/main/README.md#控制台登录管理)
+及 [ADR-0010](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) 为准。
+
 ## 租户隔离（规范 §12、§86）
 
 租户边界覆盖：User、Machine、Node、Device、Route、ACL、Grant、Auth Key、API Key、
