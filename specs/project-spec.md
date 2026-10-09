@@ -2953,7 +2953,9 @@ SHA-256 指纹，官方客户端据此替代 CA 校验。除指纹机制外不�
 - 端点：`POST /api/self-service/v1/signup`（仅入口站主机应答，其余主机回落到
   该组织自己的控制面）；入口站限流 5 租户/小时/IP。
 - 配置面：`-registration`（单租户）；`-org-config` 的 `registration` 与
-  `self_service{site, domain_suffix, scheme, cookie_domain, plan}`（多租户）。
+  `self_service{site, domain_suffix, scheme, port, cookie_domain, plan}`（多租户）。
+  `port` 用于只开放非标准端口（如 9090）的部署：租户 URL 必须带上真正应答的
+  端口，不能交给默认端口猜测。
   `self_service` 要求入口站 `registration=open` 且部署已启用
   `-platform-state-dir` 与 `-plans`，否则启动即失败（fail closed）。
 - 域名：租户域名为 `<org>.<domain_suffix>`，需要泛解析；`cookie_domain`

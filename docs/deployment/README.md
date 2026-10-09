@@ -85,6 +85,7 @@ curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:9090/api/v1/overview  
     "site": "portal",
     "domain_suffix": "tailnet.example.com",
     "scheme": "https",
+    "port": "9090",
     "cookie_domain": "example.com",
     "plan": "free"
   }
@@ -101,6 +102,8 @@ XUNARA_EXTRA_ARGS="-org-config /etc/xunara/orgs.json \
   新租户状态目录在 `-platform-state-dir/orgs/` 下自动创建，备份必须包含它。
 - `cookie_domain` 让注册后的会话跨到租户域名；不配置则到新域名重新登录一次。
 - 入口站限流 5 租户/小时/IP；删除租户走平台 API。
+- 只开放非标准端口（例如 nginx 独占 9090）时必须设置 `self_service.port`，
+  否则租户 URL 指向 80/443。
 
 ## 同源是硬要求
 
