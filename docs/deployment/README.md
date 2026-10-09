@@ -142,6 +142,30 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 覆盖 Linux 和浏览器，不代表 Windows、macOS、Android、iOS、直连与中继故障转移矩阵
 已全部完成；完整兼容矩阵仍须单独验收。
 
+### 账户自助验收（2026-10-09）
+
+部署版本：服务端
+[`ccb479f`](https://github.com/xunara-net/xunara-server/commit/ccb479f)，用户控制台
+[`0d126f1`](https://github.com/xunara-net/xunara-web/commit/0d126f1)。
+
+- 浏览器保存昵称及联系邮箱后即时更新展示，登录名、角色和所属组织不变。
+  未携带 CSRF 的资料写请求拒绝；跨租户人类 Session 不能读取账户。
+- 新密码确认不一致由页面阻止；当前密码错误不退出已有会话。正确改密后两个
+  浏览器会话均失效，旧密码拒绝、新密码可登录，残留父域 Cookie 不遮蔽新登录。
+- 改密前已经连接的两台官方 Linux 客户端 1.104.1 保留地址，改密后仍可通过
+  强制 DERP 中继完成加密网络内的 HTTP 数据传输。
+- 控制面重启后保留资料、新密码、新登录会话、套餐、网段及设备。两台原客户端
+  无需新预授权密钥即可重连，中继数据传输继续成功。
+- 桌面卡片对齐，390px 移动页面无横向溢出；浏览器无 JavaScript 页面错误。
+  测试租户随后归档，原有 `default` 与 `team` 租户及其数据保留。
+
+服务端 `go build`、`go vet`、全量测试与全量 `-race` 测试通过；前端 35 项测试、
+类型检查及生产构建通过。原子提交、审计故障回滚和跨数据库连接的改密/登录/轮换
+竞争由自动化测试覆盖。接口规则以
+[服务端账户说明](https://github.com/xunara-net/xunara-server/blob/main/README.md#账户自助管理)
+与 [ADR-0009](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md)
+为准。此次仍是 HTTP 调试环境，不代表 HTTPS、邮箱验证、密码找回或 2FA 已完成。
+
 ## 同源是硬要求
 
 用户控制台使用 HttpOnly + SameSite=Lax 的会话 Cookie，**必须**与控制面 API 同源。
