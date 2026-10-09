@@ -200,6 +200,10 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 
 ## 同源是硬要求
 
+新旧密码入口的故障收敛、验证及发布状态见
+[密码登录验收](2026-10-09-password-login-consolidation.md)。此切片不改前端静态产物、
+套餐或客户端协议，仍需服务端提交的最终 CI 和可回滚升级验收。
+
 正式第三方认证入口、成员邀请与自助入口租户门禁的最新版本和调试升级见
 [认证与成员邀请验收](2026-10-09-browser-auth-member-invitations.md)。先升级服务端再
 部署用户 Web；邀请码与注册页地址分开发送，自助入口不用于邀请共享成员。

@@ -56,6 +56,12 @@ Session 存储。控制面 Session 落状态目录，重启不掉登录，是水
 成功。HTTP/gRPC 门禁失败关闭，Web 保留目标地址并允许重试；边界以
 [ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) 为准。
 
+JSON 和兼容 HTML 密码入口共用同一业务服务。限流、密码登录的初始化计数、
+账户/凭据读取或会话存储故障均拒绝签发登录，不清理 Cookie、不引导重新初始化；
+切换入口仍使用相同预算。查询带请求 context，旧布尔读取只作兼容适配。
+范围与仍需复核的启动初始化/其他历史调用见
+[ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md)。
+
 ## 租户隔离（规范 §12、§86）
 
 租户边界覆盖：User、Machine、Node、Device、Route、ACL、Grant、Auth Key、API Key、

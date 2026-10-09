@@ -44,6 +44,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 [认证与中继审查验收](docs/deployment/2026-10-09-authentication-relay-admin.md)。
 最新正式认证入口、原子成员邀请、自助入口租户门禁及可回滚调试部署见
 [认证与成员邀请验收](docs/deployment/2026-10-09-browser-auth-member-invitations.md)。
+密码登录失败关闭、旧业务收敛及本轮验证状态见
+[密码登录验收](docs/deployment/2026-10-09-password-login-consolidation.md)。
 
 ## 目录
 

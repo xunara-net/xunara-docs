@@ -41,6 +41,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session | 持久会话、单个/批量撤销、事务审计；[撤销 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 多实例部署验收、完整设备/地点/最后活动登录记录；旧只读适配仍需逐步收敛 |
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
+| 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；密码存储故障不放行、不清 Cookie 或跳转初始化；[ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md) | 成功登录审计仍在提交后执行；启动初始化及其他旧元数据读取/写入仍需复核，不能据此宣称全部认证路径已失败关闭 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
 | OAuth/OIDC | 持久事务和提供方验证；正式 API 下浏览器入口与旧书签转接已消除 SPA 遮蔽，本地真实 RSA/JWKS/PKCE 同源浏览器验收通过；[登录代码](https://github.com/xunara-net/xunara-server/blob/main/control/login.go) | 公网提供方/固定 HTTPS 验收、第三方首次建号的配额/身份链接/审计原子性仍未闭环；夹具不等于生产第三方配置 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
@@ -123,9 +124,25 @@ nonce、PKCE、浏览器绑定/state/事务重放、同源回跳与旧书签，�
 拒绝入口未知外部身份，已有持久链接仍可登录，普通租户不变。第三方自动开独立租户
 没有实现；不能把普通租户第三方登录或邮箱匹配包装成这项能力。
 
+## 本轮补充：密码登录与旧业务收敛
+
+真实 SQLite 故障回归先复现限流放行、错误密码/初始化假判断和会话存储失败，
+再统一新旧入口为失败关闭。内部 Store 增加带 context 的读取，旧方法薄适配同一
+SQL；删掉两份重复业务，不删除尚有调用方的兼容入口。新边界增加中文注释。
+
+最终代码 build、vet、全量 test/race 通过；专项 race 重复 20 次、共享预算重复
+5 次通过。Web 92 项、Admin 25 项及构建重新通过，发布二进制的 23 阶段浏览器
+回归通过。对应 CI、调试升级与回滚快照在
+[密码登录验收](../deployment/2026-10-09-password-login-consolidation.md)中单独确认，
+不能将上一版运行状态当成本次部署证据。
+
+服务端 `0be7330` 的对应 GitHub CI 全部通过后完成调试升级；前端仍为 `4f24b2e`
+与 `145806e`，静态校验和未变。原有两租户、状态、套餐、配置和中继指纹保留，
+公网匿名与授权平台只读验收通过，不修改生产密码或注入数据库故障。
+
 ## 后续顺序
 
-1. 安全/一致性：补注册审计与其他资源配额原子性，收敛历史身份查询错误传播与跨面授权校验。
+1. 安全/一致性：补成功登录/注册审计与其他资源配额原子性，复核启动初始化和历史元数据/身份读取，收敛跨面授权校验。
 2. 完整认证链路：补第三方首次建号事务、公网提供方/固定 HTTPS、多实例与恢复验收；
    先 Proposal 后实现邮箱验证、找回与 2FA，不把未验证邮箱作为身份键。
 3. 前端对等：继续收敛其他页面加载错误，补 DNS 写接口/表单、用户私有中继管理及完整 RBAC。
