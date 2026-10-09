@@ -11,6 +11,9 @@
 | 登录报 OIDC 回调错误 | `-server-url` 与浏览器地址不一致；检查 OIDC 回调 allowlist 与 clock skew |
 | `/admin/` 404 | 未安装 admin dist（`install-web.sh` 第二个参数），或 nginx 的 `/admin/` location 被覆盖 |
 | 客户端一直「连接中」/ `Starting` | netmap 中没有可用 DERP：检查 `-derp-map`、9091 公网可达、`derp.json` 指纹是否最新 |
+| 新建租户客户端没有中继 | 检查显式公共池配置与平台准入地址，见 [多租户部署](https://github.com/xunara-net/xunara-deploy/blob/main/README.md#多租户与自助注册)；静态组织仍需自身 map |
+| 中继准入返回 404 | 多租户按 Host 路由，旧租户地址不能直接用回环 Host 调用；公共池改用平台准入地址并启用公共 map |
+| 套餐、登录名、会话或审计字段空白 | 前端可能仍为旧构建，缺少按端点的响应转换；升级 web dist，保留服务端原有 API 契约 |
 | 设备注册被拒 | 超出套餐设备上限（`DEVICE_LIMIT_REACHED`）；或注册审批未通过（控制台「我的设备」） |
 | 平台 API 401/403 | `XUNARA_PLATFORM_ADMIN_TOKEN` 未配置（默认 fail closed）或令牌错误 |
 | 权限不生效 | 规则必须最终经 Policy Compiler；检查是否只改了可视化层未提交，或 Route/Permission 用错 |

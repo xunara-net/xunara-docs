@@ -23,13 +23,15 @@ Docker Compose   server + relay + web/nginx 三个容器 + 两个具名卷
 公网只暴露 nginx 一个入口：控制台、超管后台、控制面 API 因此天然同源。控制面退到
 回环地址，任何客户端协议（TS2021 / Noise / DERP 准入）都经 nginx 反代进来。
 
-控制面单元带 `-trusted-proxy`：限流按 `X-Forwarded-For` 的最后一跳（nginx 追加的
-真实客户端地址）计数，否则所有请求都会记在 127.0.0.1 上共享同一个桶。若把控制面
-直接暴露到公网，必须去掉该开关。
+安装器默认不信任转发头。控制面仅通过同机 nginx 暴露时，显式设置
+`XUNARA_TRUSTED_PROXY=true`：限流按代理追加的真实客户端地址计数。直接暴露公网的
+控制面保持默认关闭，避免来源地址伪造。配置以部署仓库 README 为准。
 
 ## 单端口同源部署（实测路径）
 
 主机只放行一个端口（例如 9090）时的完整流程，已在 systemd 主机上跑通：
+
+在 `xunara-deploy` 仓库目录执行，先准备服务端二进制、前端 dist 与中继 map。
 
 ```sh
 # 1) 控制面：退到 127.0.0.1:9190，把公网端口让给 nginx
@@ -37,6 +39,7 @@ sudo systemctl stop xunarad                      # 必须先停：运行中的�
 sudo XUNARA_SERVER_URL=http://host:9090 \
      XUNARA_LISTEN=127.0.0.1:9190 \
      XUNARA_GRPC_LISTEN=127.0.0.1:9191 \
+     XUNARA_TRUSTED_PROXY=true \
      XUNARA_EXTRA_ARGS="-derp-map /var/lib/xunara-relay/derp.json" \
      ./install.sh /tmp/xunarad
 
@@ -97,15 +100,25 @@ curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:9090/api/v1/overview  
 ```
 
 ```sh
-XUNARA_EXTRA_ARGS="-org-config /etc/xunara/orgs.json \
-  -platform-state-dir /var/lib/xunara/platform -plans builtin"
+sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
+     XUNARA_LISTEN=127.0.0.1:9190 XUNARA_TRUSTED_PROXY=true \
+     XUNARA_MANAGED_DERP_MAP=/var/lib/xunara-relay/derp.json \
+     XUNARA_EXTRA_ARGS="-plans builtin -network-pool 100.100.0.0/16" \
+     ./install.sh /tmp/xunarad
 ```
+
+在 `xunara-deploy` 仓库执行；组织配置和已有公共中继 map 必须已存在。安装器使用
+`XUNARA_STATE` 作为平台状态根，自动选择多租户参数，不混入单租户启动选项。
+不要通过 `XUNARA_EXTRA_ARGS` 追加 `-org-config`。中继准入 URL 与恢复规则见
+[部署仓库的多租户章节](https://github.com/xunara-net/xunara-deploy/blob/main/README.md#多租户与自助注册)。
 
 - 入口站必须 `registration=open`，否则启动报错（控制台与 API 不允许互相矛盾）。
 - `*.domain_suffix` 需要泛解析到同一入口（nginx `server_name _` 已接受任意 Host）；
   新租户状态目录在 `-platform-state-dir/orgs/` 下自动创建，备份必须包含它。
 - `cookie_domain` 让注册后的会话跨到租户域名；不配置则到新域名重新登录一次。
 - 入口站限流 5 租户/小时/IP；删除租户走平台 API。
+- 旧入口本地注册不会创建公共 tailnet 成员；控制台必须使用自助开通流程。
+- 托管租户的公共中继只来自显式部署配置，不继承其他租户的私有 map 或身份数据。
 - 只开放非标准端口（例如 nginx 独占 9090）时必须设置 `self_service.port`，
   否则租户 URL 指向 80/443。
 
@@ -124,7 +137,8 @@ XUNARA_EXTRA_ARGS="-org-config /etc/xunara/orgs.json \
 中继是独立仓库（`xunara-relay`）的进程，和 nginx / 控制面**分开**：
 
 - 独立模式（默认）：`-verify-url http://127.0.0.1:<控制面端口>/derp/admit`，准入问
-  控制面，控制面不可达即 fail closed。
+  控制面，控制面不可达即 fail closed。多租户公共池使用平台准入地址，见
+  [ADR-0008](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0008-managed-relay-admission.md)。
 - 托管模式：`-control-url` + 一次性注册令牌，中继出现在超管后台的中继列表里，
   数量受套餐 `max_relays` 限制。
 
