@@ -29,6 +29,8 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0011](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 通行密钥迁移到独立 Web 与账户认证收敛 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 认证存储故障与无效身份分离 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0013](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0013-atomic-relay-enrollment.md) | 中继注册的原子配额与凭据交换 | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md) | 正式浏览器认证入口与原子成员邀请 | xunara-server | Accepted | 2026-10-09 |
+| [ADR-0015](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0015-self-service-external-admission.md) | 自助入口禁止第三方隐式加入共享网络 | xunara-server | Accepted | 2026-10-09 |
 
 ## 模板
 

@@ -42,6 +42,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 接口存在不代表新规格的全部功能完成；手册中的目标模型应与台账一并阅读。
 本轮代码梳理、认证故障、中继后台与原子注册的已实现边界、验证和调试部署见
 [认证与中继审查验收](docs/deployment/2026-10-09-authentication-relay-admin.md)。
+最新正式认证入口、原子成员邀请、自助入口租户门禁及可回滚调试部署见
+[认证与成员邀请验收](docs/deployment/2026-10-09-browser-auth-member-invitations.md)。
 
 ## 目录
 

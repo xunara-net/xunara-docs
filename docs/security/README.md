@@ -21,6 +21,17 @@ Service Identity  服务：API Key / Agent Token / Relay Token
 `redirect_uri`、JWKS 轮换、时钟偏移、code replay、state replay；Redirect URI 必须
 allowlist，禁止开放重定向。
 
+正式 SPA 通过 API 路径启动提供方认证，旧书签仅转接同一事务。新旧入口共享持久
+限流，存储故障失败关闭；不记录提供方原始错误正文。成员邀请创建/撤销由有效
+owner 人类会话和 CSRF 保护，事务内复核角色/会话并绑定审计。注册的账户、凭据、
+邀请、额度、会话和审计同提交，失败不消费邀请、不留下孤立账户。
+详见 [ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md)；
+该边界仅覆盖本地成员注册，不代表第三方首次建号和所有历史创建点已原子化。
+
+自助开独立网络的入口拒绝未知第三方身份加入共享网络；已有持久链接仍可登录，
+不按邮箱认领所有者。第三方自动开租户尚未实现，详见
+[ADR-0015](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0015-self-service-external-admission.md)。
+
 ## Secret 处理（规范 §8、§87）
 
 - 禁止把 `client_secret`、`appkey`、`access_token`、`refresh_token`、API secret 放进 URL query。
