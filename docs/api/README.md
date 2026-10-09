@@ -6,7 +6,7 @@
 
 | 前缀 | 认证 | 用途 |
 |---|---|---|
-| `/api/v1/*` | 会话 Cookie / API Key | 用户控制台：概览、设备、路由、用户、DNS、策略、预认证密钥、API Key、Session、审计 |
+| `/api/v1/*` | 会话 Cookie / API Key（账户自助仅人类 Session） | 用户控制台：概览、账户、设备、路由、用户、DNS、策略、预认证密钥、API Key、Session、审计 |
 | `/api/v2/*` | 会话 Cookie / API Key | 产品能力：meta、organization、TKA、DERP、policy、security、exit-nodes、relays、serve、devices、machines、services、flux、reach、audit、agent-tokens、webhooks、shares |
 | `/api/platform/v1/*` | `XUNARA_PLATFORM_ADMIN_TOKEN`（Bearer） | 平台管理：organizations、plans、audit、跨租户用户管理 |
 | `/api/agent/v1/*` | Agent Token | 原生客户端协议 |
@@ -39,6 +39,6 @@ Secret 规则：不放 URL query、不放命令行、不进日志（规范 §8�
 
 ## 契约位置
 
-- 服务端路由与处理：`xunara-server/control/`（`api.go`、`api_v2.go`、`platform*.go`、`api_auth.go`）。
+- 服务端路由与处理：`xunara-server/control/`（`api.go`、`api_v2.go`、`platform*.go`、`api_auth.go`、`api_account.go`）。
 - gRPC/HTTP 定义：`xunara-server/api/proto/xunara/v2/platform.proto`（生成物在 `api/gen/`）。
 - 中继注册协议：`xunara-relay/docs/relay-protocol.md`。

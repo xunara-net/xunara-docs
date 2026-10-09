@@ -31,6 +31,10 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
    依赖方向、数据归属）。
 5. [CONTRIBUTING.md](CONTRIBUTING.md) — 分支、提交信息、发布与版本兼容。
 
+账户自助资料与改密的已实现边界见 [用户手册](docs/user/README.md#账号安全)
+和 [ADR-0009](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md)。
+邮箱验证、密码找回与 2FA 仍是待开发功能，不以规格规划代替当前能力。
+
 ## 目录
 
 ```text
