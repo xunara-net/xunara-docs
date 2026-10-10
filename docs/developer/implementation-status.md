@@ -47,7 +47,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | OAuth/OIDC | 持久事务和提供方验证；正式 API 下浏览器入口与旧书签转接已消除 SPA 遮蔽，本地真实 RSA/JWKS/PKCE 同源浏览器验收通过；[登录代码](https://github.com/xunara-net/xunara-server/blob/main/control/login.go) | 公网提供方/固定 HTTPS 验收、第三方首次建号的配额/身份链接/审计原子性仍未闭环；夹具不等于生产第三方配置 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
-| 网络分配 | 池分配、自定义 CIDR 校验与冲突检测；[网络 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0005-tenant-network.md) | 地址迁移对既有设备的完整工作流、保留网络运维与 Adapter 对接 |
+| 网络分配 | 用户网段预览/版本保存、持久实际/期望收敛、单设备 IPv4 CAS、跨租户历史预留、官方保留段保护；[ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md) | 旧 IP 保持；批量迁移/安全回收/扩容、关联 IP 配置自动迁移、IPv6 自定义及 Adapter 对接未闭环 |
 | 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；邀请写入事务复核会话/角色并绑定审计，旧表单共用实现；[成员页面](https://github.com/xunara-net/xunara-web/blob/main/src/views/MembersView.vue)不再提供后端未支持的 viewer 选项 | 服务端目前只有 owner/admin/member；Viewer/Network Admin、Resource Scope、角色变更的并发/审计原子性与邀请通知未完成，前端判断不代替后端授权 |
 | DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本/名称保护；[ADR-0018](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0018-network-console.md) | 全注册/更名路径反向名称冲突检测、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
 | Route/Exit Node | 通告/审批与能力闸门；设备详情可撤销旧批准，路由与中继独立页面，读取故障显示未知并支持恢复 | 其他页面读取故障仍需复核；路由不等于访问授权，心跳不代表真实数据路径 |
@@ -55,6 +55,8 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 拓扑与诊断 | 有节点视图及诊断底座 | 实时连接路径遥测与完整诊断未交付，不能把布局连线当作真实直连证据 |
 | 托管中继管理 | 用户/超管配置共享版本链、CAS/历史恢复、原子审计/删除；Relay 实际热更限速、维护拒新、停用断连/恢复与终态撤销，身份绑定高水位及持久服务回执；[ADR-0021](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0021-relay-runtime-execution.md) | 当前是每连接双向共用额度，不是方向/全局/地区/租户/用户/设备限速；公共跨租户发布、分组/成本/计费、灰度/签名自动升级未完成；服务回执不替代端到端实测 |
 | 中继安全/一致性 | 准入与服务身份独立；原子注册；心跳按 token hash 在同事务复查身份/撤销、报告/遥测/服务审计一起提交，存储故障 503；新进程不能凭缓存授权，旧进程无报告清为未知 | 注册审计仍在提交后执行，响应丢失的身份恢复及套餐修改竞争未闭环；其他历史读取的故障传播、租户/平台修改校验应继续对齐 |
+| 默认/非托管中继 | 首屏来源与端口，固定官方 HTTPS 导入草稿、手工地图、CAS/事务审计/历史恢复、碰撞双向保护与租户策略合并 | 外部节点不受远程托管，不伪造健康/回执；官方公共接纳和外部数据面仍须实测 |
+| 中继预编译 | [v0.1.0-preview.1](https://github.com/xunara-net/xunara-relay/releases/tag/v0.1.0-preview.1) 七种真实二进制、SHA256SUMS/BUILD.txt、用户直接下载入口 | 已编译/校验不等于全 OS 运行验收；无 Windows 服务安装器、Apple 签名/公证、签名更新或自动升级 |
 | 超管用户管理 | 查看、会话撤销、删除与最后 owner 保护切片 | 禁用/解禁、重置密码、覆盖额度、完整账户注销、独立超管人身份与恢复/告警工作流 |
 | 超管统计/套餐切换 | 本轮修复服务端字段到前端模型的映射，避免网段/额度/待审批统计丢失；修正套餐切换的请求字段，浏览器核对持久套餐结果 | 活跃用户/新增统计、真实健康/成本指标，不能填模拟数字 |
 | 审计与事件 | 有账户/平台/中继操作审计与既有事件能力 | 逐操作原子性审查、统一来源、导出/筛选、可靠异步投递与告警 |
@@ -199,6 +201,10 @@ DNS/ACL 下发，官方 derphttp 验证 TLS pin。真实已发布 v19 二进制�
 写入或心跳收到等同于运行时限速/状态已应用。
 
 ## 后续顺序
+
+地址/外部中继切片的验证及部署状态单独见
+[本轮验收](../deployment/2026-10-10-addresses-and-external-relays.md)，不复用旧上线证据。
+历史网段保守保留不是已完成回收机制；新的 IP 与外部地图入口也不表示全部商业化完成。
 
 最新中继运行时切片：真实热更/维护/停用/撤销、服务身份绑定高水位缓存、持久回执
 与原子服务心跳已交付。追加 state v22，identity v13、官方 wire、套餐和静态中继不变。

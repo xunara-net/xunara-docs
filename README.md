@@ -61,6 +61,11 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 [ADR-0021](adr/README.md)与[中继运行时验收](docs/deployment/2026-10-10-relay-runtime-execution.md)。
 执行报告不是端到端连接证明，也不代表方向/租户/用户限速已经实现。
 
+地址管理、默认中继首屏、非托管/官方地图草稿导入与七平台预编译下载见
+[网络控制台手册](docs/user/network-console.md)、[ADR-0022](adr/README.md)和
+[本切片验收](docs/deployment/2026-10-10-addresses-and-external-relays.md)。
+官方客户端设备 IP 限定 CGNAT 子集；原规格 RFC1918 示例的追加兼容勘误不改历史正文。
+
 ## 目录
 
 ```text

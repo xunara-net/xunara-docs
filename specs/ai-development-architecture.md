@@ -3802,3 +3802,19 @@ Network Tools
 **这就是 Xunara 的长期产品架构。**
 
 以后任何 AI 接手项目，都必须以本文件作为第一约束，而不是根据自己的理解重新发明一套 Xunara 架构。
+
+---
+
+## 2026-10-10 追加兼容性勘误：设备网段与 RFC1918 子网
+
+本勘误不改写 §18 的历史示例，也不弱化官方客户端兼容红线。根据
+[Tailscale IP pool](https://tailscale.com/docs/reference/ip-pool)与
+[保留地址](https://tailscale.com/docs/reference/reserved-ip-addresses)，官方客户端设备
+IPv4 使用 `100.64.0.0/10` 子集，排除其内部保留段；RFC1918 的家庭/办公网络通过
+Subnet Router 路由，不得把 `192.168.50.0/24` 示例当作官方设备 Node IP 兼容承诺。
+
+Xunara 地址管理的架构提案与决定见
+[ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md)。
+自定义分配池不自动重编号既有设备；显式修改 IPv4、持久实际/期望状态和保守预留
+属于本切片。安全回收、批量迁移和所有平台外部实测仍是独立待验收工作，不能依据
+菜单或预编译资产存在就声称整个 Network Allocation 生命周期完成。
