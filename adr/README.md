@@ -36,6 +36,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0018](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0018-network-console.md) | 持久网络配置与统一可视化策略 | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0019](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0019-managed-relay-map.md) | 租户私有中继地图与官方 TLS pin | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0020](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0020-relay-configuration-history.md) | 中继配置版本保护、事务历史与恢复 | xunara-server | Accepted | 2026-10-10 |
+| [ADR-0021](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0021-relay-runtime-execution.md) | 中继运行时执行与服务身份回执 | xunara-server | Accepted | 2026-10-10 |
 
 ## 模板
 

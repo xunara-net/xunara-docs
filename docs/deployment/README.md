@@ -1,5 +1,10 @@
 # 部署
 
+新版中继运行时与执行回执追加 state v22，identity v13 不变。先升级控制面再升级
+托管中继；旧进程可以心跳但执行未知。完整状态与产物需成套备份/回退，Relay 身份
+和高水位/撤销缓存一起保留。验证与上线事实见
+[中继运行时验收](2026-10-10-relay-runtime-execution.md)，不沿用上一轮发布证据。
+
 部署产物与脚本在 [xunara-deploy](https://github.com/xunara-net/xunara-deploy)，本文只说明
 拓扑与流程，具体命令以部署仓库 README 为准。
 
