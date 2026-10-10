@@ -1,5 +1,11 @@
 # 部署
 
+MagicDNS 首次初始化、账户级 OIDC 绑定/解绑与第三方邀请注册新增 identity v14，
+state v24、plans v4 不变。先升级服务端再部署 Web；旧二进制不能直接读取新身份库，
+完整停止写入备份后才升级。操作与实际配置边界以
+[服务端升级说明](https://github.com/xunara-net/xunara-server/blob/main/docs/account-onboarding-and-magicdns.md)
+为准；未配置真实发行方或 HTTPS 时不宣称生产第三方登录已经验收。
+
 合法 IPv4 自定义范围已放开 CGNAT-only 与 /16～/28 限制，默认地址与安全保护
 保持，无新迁移。官方 Linux 私网 ICMP、51 阶段浏览器与本轮只读部署事实见
 [合法 IPv4 范围验收](2026-10-10-flexible-ipv4.md)，不等于全部客户端功能已兼容。

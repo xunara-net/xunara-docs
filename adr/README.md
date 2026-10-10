@@ -42,6 +42,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0024](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0024-dns-name-ownership.md) | 设备、服务与记录的事务型 DNS 名称归属 | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0025](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0025-atomic-member-updates.md) | 成员补丁、事务型授权/审计与最后所有者保护 | xunara-server | Accepted | 2026-10-11 |
 | [ADR-0026](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0026-atomic-password-login-audit.md) | 密码会话与两项成功审计原子提交 | xunara-server | Accepted | 2026-10-11 |
+| [ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 显式 MagicDNS 初始化、账户绑定与 OIDC 邀请准入 | xunara-server | Accepted | 2026-10-11 |
 
 ## 模板
 

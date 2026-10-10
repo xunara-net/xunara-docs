@@ -37,19 +37,19 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 模块 | 现状与证据 | 尚缺事项 |
 |---|---|---|
 | 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/导出工作流、通知与账户生命周期 |
-| 密码/邀请/注册模式 | 已实现切片，入口共享策略；本地成员注册将额度、账户、凭据、身份链接、邀请、会话和审计原子提交；[ADR-0014](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0014-browser-auth-and-member-invitations.md) | 第三方/管理员其他创建点仍需复核；邮箱验证、找回、验证码及完整恢复策略未完成 |
+| 密码/邀请/注册模式 | 本地密码注册与 OIDC 邀请加入均原子提交成员额度、账户、身份链接、邀请、会话和必需审计；未知 OIDC 身份遵守 invite/closed；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 管理员其他创建点仍需复核；邮件投递、邮箱验证、找回、验证码及完整恢复策略未完成 |
 | 初始化与独立租户 owner | 已实现一次性完成事实、内置 owner 认领、密码、会话和必需审计的同事务提交；故障零部分身份、允许重试，删除密码或残留证明不能重新开通；[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 初始占位用户播种仍非本事务；平台组织/套餐跨库可靠补偿、响应丢失恢复及完整账号恢复未完成 |
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session | 持久会话、单个/批量撤销、事务审计；[撤销 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 多实例部署验收、完整设备/地点/最后活动登录记录；旧只读适配仍需逐步收敛 |
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
 | 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；会话与两项必需成功审计已同事务提交，失败/零行写入不发凭据，旧 Cookie 保持；[ADR-0026](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0026-atomic-password-login-audit.md) | 失败事件可靠投递、其他认证方法/旧元数据读取写入、IP/User-Agent 与完整登录历史仍需闭环，不能据此宣称全部认证路径完成 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
-| OAuth/OIDC | 持久事务和提供方验证；正式 API 下浏览器入口与旧书签转接已消除 SPA 遮蔽，本地真实 RSA/JWKS/PKCE 同源浏览器验收通过；[登录代码](https://github.com/xunara-net/xunara-server/blob/main/control/login.go) | 公网提供方/固定 HTTPS 验收、第三方首次建号的配额/身份链接/审计原子性仍未闭环；夹具不等于生产第三方配置 |
+| OAuth/OIDC | 持久 state/nonce/PKCE 与提供方验证；人类账户绑定/解绑、同一发起会话、来源会话撤销、最后可用登录方法保护；第三方登录/建号同事务提交身份与成功审计；本地真实 RSA/JWKS/PKCE 浏览器验收通过；[账户入门](https://github.com/xunara-net/xunara-server/blob/main/docs/account-onboarding-and-magicdns.md) | 公网提供方/固定 HTTPS 尚待实际配置验收；第三方自动开通独立租户、全局账户跨租户成员关系尚未完成，夹具不等于生产配置 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
 | 网络分配 | 用户网段预览/版本保存、持久实际/期望收敛、单设备 IPv4 CAS、跨租户历史预留、保留段保护；合法 IPv4 不限 CGNAT 或 /16～/28，/31 /32 主机池与非标准兼容提示；[ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 旧 IP 保持；非标准范围不保证全部官方 OS/功能兼容；批量迁移/安全回收/扩容、关联 IP 配置自动迁移、IPv6 自定义及 Adapter 对接未闭环 |
 | 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；角色/资料补丁在事务内复核实际发起会话/服务 key、当前 owner、目标版本、最后 owner 与必需审计；CLI/兼容表单共用规则，删除与降权复用同事务保护；过期页面暂停写入要求刷新确认，缺版本禁写；[ADR-0025](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0025-atomic-member-updates.md) | 服务端仍只有 owner/admin/member；Viewer/Network Admin、Resource Scope、邀请通知、其他写点与完整账户生命周期未完成；历史无版本 API 不提供客户端 CAS，前端判断不代替后端授权 |
-| DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本保护；注册/更名/轮换/原生心跳与记录/服务共用事务型名称归属，同名新设备稳定分配别名；追加 state v24 及只读升级预检；[ADR-0024](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0024-dns-name-ownership.md) | 用户手工别名与已绑定域名迁移、复杂跨租户共享投影的持久名称预留、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
+| DNS | 持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 与版本保护；显式首次分配独立内部域名，Free 可启用/开关，既有 Noise 流同步设备 FQDN/DNS/Domain；重启恢复命名空间，名称归属/配置/历史/审计同事务；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 用户手工别名与绑定域迁移、复杂跨租户名称预留、真实客户端 DNS 全 OS 验收；不伪造 DoH/DoT/TXT/CNAME 管理 |
 | Route/Exit Node | 通告/审批与能力闸门；设备详情可撤销旧批准，路由与中继独立页面，读取故障显示未知并支持恢复 | 其他页面读取故障仍需复核；路由不等于访问授权，心跳不代表真实数据路径 |
 | 权限/ACL/Grants | 已交付统一 AST、规则/图/矩阵/组/高级/历史与模拟、Diff、自检、CAS 发布/恢复；实际 Compiler 解释，事务复查身份/审计，真实 Noise 下发；[网络控制台](../user/network-console.md) | 全语法/规模优化、虚拟滚动/分组折叠、完整细粒度 RBAC 与实时连通性；应用/特殊规则通过高级编辑而非无损未证实的图形转换 |
 | 拓扑与诊断 | 有节点视图及诊断底座 | 实时连接路径遥测与完整诊断未交付，不能把布局连线当作真实直连证据 |
