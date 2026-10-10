@@ -53,6 +53,10 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 使用步骤见[网络控制台手册](docs/user/network-console.md)；DNS、私有中继和手机侧栏
 与之一起交付，实施边界仍以台账和服务端测试为准，不表示全部商业化功能完成。
 本轮验证、state v19→21 与维护回退边界见[网络控制台验收](docs/deployment/2026-10-10-network-console.md)。
+中继的配置冲突保护、历史恢复、不可逆撤销及尚缺的运行时执行能力见
+[网络控制台手册](docs/user/network-console.md#配置与恢复)与 [ADR-0020](adr/README.md)。
+本切片的提交、最终回归和维护升级状态见
+[中继配置验收](docs/deployment/2026-10-10-relay-configuration-history.md)。
 
 ## 目录
 

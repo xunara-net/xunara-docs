@@ -3,6 +3,10 @@
 部署产物与脚本在 [xunara-deploy](https://github.com/xunara-net/xunara-deploy)，本文只说明
 拓扑与流程，具体命令以部署仓库 README 为准。
 
+中继配置共享版本、历史恢复与事务审计的最新验收及维护升级状态见
+[中继配置验收](2026-10-10-relay-configuration-history.md)。该切片无新迁移；期望配置
+下发不等于节点已经执行，具体兼容性与未完成边界以该记录为准。
+
 ## 形态
 
 ```text

@@ -3,6 +3,8 @@
 状态：最终本地回归、发布产物隔离验收与代码仓库 CI 通过，已完成维护升级；公网匿名
 浏览器与授权平台只读验收通过。
 本记录只覆盖网络控制台切片，不宣称全部规格或完整商业化平台已完成。
+后续中继配置版本保护、事务审计及历史恢复见
+[中继配置验收](2026-10-10-relay-configuration-history.md)；本文末尾的缺口是当时版本的事实。
 
 源码：服务端 [`5cbccd3`](https://github.com/xunara-net/xunara-server/commit/5cbccd3)、
 用户中心 [`15c232c`](https://github.com/xunara-net/xunara-web/commit/15c232c)、

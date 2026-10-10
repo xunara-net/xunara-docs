@@ -35,6 +35,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 本地 owner 的一次性原子初始化 | xunara-server | Accepted | 2026-10-09 |
 | [ADR-0018](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0018-network-console.md) | 持久网络配置与统一可视化策略 | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0019](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0019-managed-relay-map.md) | 租户私有中继地图与官方 TLS pin | xunara-server | Accepted | 2026-10-10 |
+| [ADR-0020](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0020-relay-configuration-history.md) | 中继配置版本保护、事务历史与恢复 | xunara-server | Accepted | 2026-10-10 |
 
 ## 模板
 
