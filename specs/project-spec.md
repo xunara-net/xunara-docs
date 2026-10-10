@@ -2964,3 +2964,10 @@ SHA-256 指纹，官方客户端据此替代 CA 校验。除指纹机制外不�
 - 域名：租户域名为 `<org>.<domain_suffix>`，需要泛解析；`cookie_domain`
   可让注册会话跨到租户域名（handoff），未配置时降级为新域名重新登录。
 - 明确不做（本阶段）：邮箱验证、图形验证码、计费回调；自助注销留待后续。
+
+## 2026-10-10 追加网段策略补充
+
+§54 的 /16–/28 限制由 [ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md)
+替代：合法 IPv4 自定义 CIDR 不再有该人工界限，亦不强制 CGNAT-only。
+默认范围、安全保留/冲突链路、套餐能力与旧设备地址保持；/31、/32 是小型主机池，
+耗尽拒绝分配。非 CGNAT 的管理入口明示客户端兼容风险，不作为官方全平台支持承诺。

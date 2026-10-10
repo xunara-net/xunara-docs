@@ -64,7 +64,11 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 地址管理、默认中继首屏、非托管/官方地图草稿导入与七平台预编译下载见
 [网络控制台手册](docs/user/network-console.md)、[ADR-0022](adr/README.md)和
 [本切片验收](docs/deployment/2026-10-10-addresses-and-external-relays.md)。
-官方客户端设备 IP 限定 CGNAT 子集；原规格 RFC1918 示例的追加兼容勘误不改历史正文。
+自定义合法 IPv4 已放开 CGNAT-only 和 /16～/28 人工限制；默认 CGNAT 与安全检查
+保持，非标准范围不作为全平台官方客户端兼容承诺。范围策略变更见
+[ADR-0023](adr/README.md)，规格只追加补充，不改写历史正文。
+本轮官方 Linux 私网 ICMP/显式 IP 更新、51 阶段浏览器与调试站部署事实见
+[合法 IPv4 范围验收](docs/deployment/2026-10-10-flexible-ipv4.md)。
 
 ## 目录
 

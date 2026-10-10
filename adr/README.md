@@ -37,7 +37,8 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0019](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0019-managed-relay-map.md) | 租户私有中继地图与官方 TLS pin | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0020](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0020-relay-configuration-history.md) | 中继配置版本保护、事务历史与恢复 | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0021](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0021-relay-runtime-execution.md) | 中继运行时执行与服务身份回执 | xunara-server | Accepted | 2026-10-10 |
-| [ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md) | 持久地址管理、非托管中继与预编译下载 | xunara-server | Accepted | 2026-10-10 |
+| [ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md) | 持久地址管理、非托管中继与预编译下载 | xunara-server | Accepted（强制 CGNAT 范围部分由 ADR-0023 替代） | 2026-10-10 |
+| [ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 合法 IPv4 自定义范围与官方兼容范围分离 | xunara-server | Accepted | 2026-10-10 |
 
 ## 模板
 
