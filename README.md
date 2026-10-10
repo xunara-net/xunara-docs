@@ -90,6 +90,12 @@ Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管；原开发�
 v23→24 预检、实际上线状态和剩余认证边界见
 [密码审计与累计升级验收](docs/deployment/2026-10-11-password-login-audit.md)。
 
+MagicDNS 首次启用、账户级 OIDC 绑定/解绑与第三方邀请入网已完成本轮切片和
+调试站 identity v13→14 维护升级，原网段/账号/设备保持。61 阶段浏览器、官方
+Linux 客户端、完整竞态与回退边界见
+[账户入网与 MagicDNS 验收](docs/deployment/2026-10-11-account-onboarding-magicdns.md)。
+真实公网 OIDC 仍需配置发行方与固定 HTTPS，不将隔离夹具当成生产开通。
+
 ## 目录
 
 ```text
