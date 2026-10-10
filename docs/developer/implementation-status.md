@@ -206,6 +206,13 @@ DNS/ACL 下发，官方 derphttp 验证 TLS pin。真实已发布 v19 二进制�
 [本轮验收](../deployment/2026-10-10-addresses-and-external-relays.md)，不复用旧上线证据。
 历史网段保守保留不是已完成回收机制；新的 IP 与外部地图入口也不表示全部商业化完成。
 
+本切片相关代码 CI 全绿后已部署 Server `499654b`、Web `bb99c97`、Admin `8c5d732`。
+两个活动租户 state v22→23、平台 plans v3→4，identity v13；完整维护备份后保留原
+账号/会话/设备/DNS/中继/网络与受保护配置。公网匿名浏览器、授权平台只读、实际/
+期望网段一致性及既有 pin 下公网 DERP probe 验收通过，公共 Relay 无重启。
+Relay `v0.1.0-preview.1` 已发布七平台真实预编译文件，逐项 SHA256 验证通过；这
+不代表全 OS 外部实测或签名自动升级已完成。
+
 最新中继运行时切片：真实热更/维护/停用/撤销、服务身份绑定高水位缓存、持久回执
 与原子服务心跳已交付。追加 state v22，identity v13、官方 wire、套餐和静态中继不变。
 两仓库完整 build/vet/test/race、Web 156 / Admin 36 项测试和构建、40 阶段干净

@@ -1,7 +1,7 @@
 # 地址、非托管中继与预编译下载验收（2026-10-10）
 
-状态：源码与真实下载已发布，最终全量/竞态、干净产物浏览器及隔离升级/成套恢复
-通过；等待服务端 GitHub CI 完成后进行调试站维护升级，不把本地功能当成已上线。
+状态：源码、真实预编译下载与调试站均已发布，最终全量/竞态、干净产物浏览器、
+隔离升级/成套恢复及相关 GitHub CI 通过；维护升级后的公网与授权平台只读验收通过。
 任务：[跨仓任务 #5](https://github.com/xunara-net/xunara-server/issues/5)。
 架构与 API 边界以
 [ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md)
@@ -52,13 +52,17 @@ python3 .github/check_links.py
 布局、外部配置持久化/CAS/删除、网段仅预览与旧 IP 保持、设备 IP 冲突保留草稿及
 成员只读。设备为隔离数据库夹具，不冒充官方客户端注册或真实网络连接。
 
-Server `499654b` build/vet/全量 test/全量 race 通过，Web `f7a38c3` 的 164 项单测与
+Server `499654b` build/vet/全量 test/全量 race 通过，Web `bb99c97` 的 164 项单测与
 Admin `8c5d732` 的 37 项单测、类型检查和生产构建通过。干净提交的实际发布二进制
 及两个 dist 重新运行完整 46 阶段 Chromium 通过；不沿用 dirty 预览产物的结果。
-对应 [Web CI](https://github.com/xunara-net/xunara-web/actions/runs/38028634899)、
+对应 [Web CI](https://github.com/xunara-net/xunara-web/actions/runs/38029689076)、
 [Admin CI](https://github.com/xunara-net/xunara-admin/actions/runs/38028635569)与
 [Deploy CI](https://github.com/xunara-net/xunara-deploy/actions/runs/38028761936)成功；
-[Server CI](https://github.com/xunara-net/xunara-server/actions/runs/38028761595)竞态阶段尚在执行。
+[Server CI](https://github.com/xunara-net/xunara-server/actions/runs/38028761595)均成功。
+
+最终 Web 修复地址与外部中继读取失败时伪装空配置的问题：故障不启用写操作，
+也不把未知权限显示成套餐禁止；恢复读取后保留正常操作入口。46 阶段浏览器回归
+使用 `bb99c97` 干净产物，包含读取故障与恢复，不用旧提交的结果代替最终产物验收。
 
 真实已发布 `aa459c8` 旧二进制初始化的隔离租户，同时验证 state v22→v23 和 plans
 v3→v4：原身份/会话/凭据/设备/旧 DNS/中继与历史/套餐不变，网段/单设备 IP/外部
@@ -72,7 +76,38 @@ v3→v4：原身份/会话/凭据/设备/旧 DNS/中继与历史/套餐不变，
 恢复旧完整状态及旧产物；业务已恢复后禁止旧快照覆盖新写入。
 静态公共中继不重启、不迁托管、不换 key/证书/pin；不在生产造测试节点或改密码。
 
-## 尚待记录与限制
+## 调试站实际升级与只读验收
 
-实际调试站维护升级及匿名/授权只读验收结果待确认。全 OS 外部设备实测、全生命周期网段回收/
-迁移、IPv6 编辑、公共跨租户发布、计费/签名自动升级和生产 HTTPS 仍是独立缺口。
+2026-10-10 北京时间 14:08 已完成调试站维护升级，访问入口为
+[调试用户中心](http://fakeop4.onbed.cn:9090)。实际部署 Server `499654b`、Web `bb99c97`
+和 Admin `8c5d732`；下载的托管 Relay 仍对应 `1f0a7de` / `v0.1.0-preview.1`。
+用户下载入口为「我的中继 → 程序下载」，提供七个平台架构的真实直链，并提示
+已预编译、无需自行编译及按服务器操作系统/CPU 选择。默认「可用中继」展示原平台中继。
+
+维护窗口先关闭公网入口、排空请求与停止控制面写任务，再备份完整平台根、配置、
+旧服务端与两个前端；没有替换现有公共 Relay。一致性备份目录为
+`/root/xunara-rollback/20261010T060738Z-addresses-external-relays`。
+发布包 SHA256 为
+`94661a82a1e2ec56708ec06b64e95dc3b760ac4632ae4ed07aecefa570b1ed02`。
+
+两个活动租户 `default` / `team` 的 state v22→v23、平台 plans v3→v4，identity v13
+保持。原身份、密码凭据、外部链接、会话、设备、DNS、中继、套餐、网络配置及历史
+保留；组织域名与受保护配置未变。只读核对两个租户实际网段与期望版本一致，仍是
+兼容 CGNAT 分配；未在生产创建测试账号/节点、修改密码或轮换平台令牌。
+
+公网匿名 Chromium 核对服务端 revision 和两个前端全部资产哈希：设备、网络、权限、
+DNS、中继和控制台有登录门禁，超管入口仍为独立令牌登录，受保护 API 返回 401。
+320/390/768px 未发现横向溢出，JS 错误为零，浏览器没有使用用户口令或平台凭据。
+本机授权平台只读查询与数据库只读核对通过；公共 Relay 的进程、启动时间和重启
+计数保持不变，TLS pin 未改变。
+
+调试主机回连自身公网域名的 TLS 探测超时，因此本机探测显式使用回环地址、保留
+地图中的 SNI；另从开发工作机访问真实公网 9091，先核对既有证书 pin，再请求
+`/derp/probe`，两者均返回 200。没有为探测修改生产地址、证书或中继配置。
+这验证服务监听/公网可达与 pin，不等同于官方客户端数据转发或全 OS 实机验收。
+
+## 剩余限制
+
+调试站仍使用 HTTP，不把它当作正式 HTTPS 生产验收。当前没有生产托管中继；其
+运行时证据来自隔离组合测试。全 OS 外部设备实测、全生命周期网段回收/迁移、
+IPv6 编辑、公共跨租户发布、计费/签名自动升级和生产 HTTPS 仍是独立缺口。
