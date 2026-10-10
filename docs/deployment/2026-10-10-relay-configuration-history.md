@@ -4,6 +4,10 @@
 通过；已完成调试站维护升级，公网匿名浏览器及授权平台只读验收通过。
 本记录仅覆盖中继配置闭环，不代表运行时执行或全部平台功能已经完成。
 
+后续运行时切片已独立实现并验收，当前状态见
+[中继运行时与回执](2026-10-10-relay-runtime-execution.md)。本记录保留该切片当时的边界，
+不能将历史“尚未实现”或已部署版本当成后续切片的当前结论。
+
 源码：服务端 [`6809d4c`](https://github.com/xunara-net/xunara-server/commit/6809d4c)、
 用户中心 [`bc2b19b`](https://github.com/xunara-net/xunara-web/commit/bc2b19b)、
 超管后台 [`cfec6ff`](https://github.com/xunara-net/xunara-admin/commit/cfec6ff)。

@@ -1,8 +1,9 @@
 # 中继运行时与持久服务回执验收（2026-10-10）
 
 状态：源码已提交，完整本地回归、干净发布产物浏览器与隔离升级/恢复通过。
-Relay/Web/Admin CI 已通过，Server CI 的全量 race 正在执行；调试站部署尚待确认，
-不能沿用上一轮部署状态。任务：[Relay issue #1](https://github.com/xunara-net/xunara-relay/issues/1)。
+Server/Relay/Web/Admin CI 全部通过，文档检查通过。调试站部署因 SSH 接入异常暂缓，
+未执行维护切换、迁移或产物替换；公网页面仍运行旧版 `6809d4c`，不能写成新版已上线。
+任务：[Relay issue #1](https://github.com/xunara-net/xunara-relay/issues/1)。
 决策：[ADR-0021](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0021-relay-runtime-execution.md)。
 
 源码：Server [`aa459c8`](https://github.com/xunara-net/xunara-server/commit/aa459c8)、
@@ -60,6 +61,12 @@ python3 .github/check_links.py
 两仓库 build/vet/全量 test/全量 race 全部通过。干净提交构建的发布产物下，
 40 阶段 Chromium 回归通过、零 JS 错误。首轮浏览器暴露旧验收文案断言未随
 “配置→期望”更新，修正后重新跑完整脚本，不隐藏失败或复用上一轮结果。
+运行时/限速及心跳/回执/跨连接撤销专项 race 各重复 20 次通过。
+
+对应 CI：[Server](https://github.com/xunara-net/xunara-server/actions/runs/38019640718)、
+[Relay](https://github.com/xunara-net/xunara-relay/actions/runs/38019643522)、
+[Web](https://github.com/xunara-net/xunara-web/actions/runs/38019656328)、
+[Admin](https://github.com/xunara-net/xunara-admin/actions/runs/38019657984)。
 
 已发布 `6809d4c` 真实二进制初始化的隔离状态通过 v21→v22，原账户/会话/凭据/
 DNS/中继/配置历史保留；旧客户端心跳继续可用，新增回执重启保留，旧二进制拒绝
@@ -74,6 +81,10 @@ v22。恢复配套旧产物及完整旧状态后 v21 可正常访问。不表示
 
 本轮不通过在生产创建测试账号、中继或修改密码来验收。线上静态公共 Relay 不迁入
 托管、不重启，不变更端口/key/pin；没有托管服务就如实显示为空，不制造在线报告。
+本轮 SSH 初始只读检查确认旧服务仍运行，随后接入返回验证成功/连接关闭或拒绝认证，
+无法建立可靠发布会话，已请求确认接入规则。产物准备和隔离验收不等于线上已替换。
+待恢复接入后，在上述 CI 全绿产物上重新复查旧版/哈希，执行完整维护备份、v22 迁移
+和公网匿名浏览器/授权平台只读验收，再单独记录上线结果；不能直接跳过发布前置检查。
 
 ## 尚缺事项
 
