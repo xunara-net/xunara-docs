@@ -76,6 +76,13 @@ DNS 注册/更名与自定义记录的事务型名称归属及升级前只读检
 Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管，本轮未升级调试站，见
 [DNS 名称归属开发验收](docs/deployment/2026-10-10-dns-name-ownership.md)。
 
+成员编辑现在使用版本确认和事务型权限/审计，过期页面不会自动覆盖；CLI 与
+兼容表单共用不变量，最后 owner 的降权/删除竞争受保护。操作与边界见
+[服务端成员管理](https://github.com/xunara-net/xunara-server/blob/main/docs/member-management.md)、
+[ADR-0025](adr/README.md)和
+[成员权限开发验收](docs/deployment/2026-10-11-atomic-member-updates.md)。仍只有三个
+现有角色，不把 Viewer/Network Admin 占位当作实现；本轮未升级调试站。
+
 ## 目录
 
 ```text

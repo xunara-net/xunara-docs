@@ -40,6 +40,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0022](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0022-address-management-and-external-relays.md) | 持久地址管理、非托管中继与预编译下载 | xunara-server | Accepted（强制 CGNAT 范围部分由 ADR-0023 替代） | 2026-10-10 |
 | [ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 合法 IPv4 自定义范围与官方兼容范围分离 | xunara-server | Accepted | 2026-10-10 |
 | [ADR-0024](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0024-dns-name-ownership.md) | 设备、服务与记录的事务型 DNS 名称归属 | xunara-server | Accepted | 2026-10-10 |
+| [ADR-0025](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0025-atomic-member-updates.md) | 成员补丁、事务型授权/审计与最后所有者保护 | xunara-server | Accepted | 2026-10-11 |
 
 ## 模板
 

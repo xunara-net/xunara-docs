@@ -1,6 +1,6 @@
 # 实现与审查台账
 
-更新：2026-10-10。范围为 `xunara-net` 组织的六个现有仓库。
+更新：2026-10-11。范围为 `xunara-net` 组织的六个现有仓库。
 
 ## 判断规则
 
@@ -48,7 +48,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
 | 网络分配 | 用户网段预览/版本保存、持久实际/期望收敛、单设备 IPv4 CAS、跨租户历史预留、保留段保护；合法 IPv4 不限 CGNAT 或 /16～/28，/31 /32 主机池与非标准兼容提示；[ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 旧 IP 保持；非标准范围不保证全部官方 OS/功能兼容；批量迁移/安全回收/扩容、关联 IP 配置自动迁移、IPv6 自定义及 Adapter 对接未闭环 |
-| 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；邀请写入事务复核会话/角色并绑定审计，旧表单共用实现；[成员页面](https://github.com/xunara-net/xunara-web/blob/main/src/views/MembersView.vue)不再提供后端未支持的 viewer 选项 | 服务端目前只有 owner/admin/member；Viewer/Network Admin、Resource Scope、角色变更的并发/审计原子性与邀请通知未完成，前端判断不代替后端授权 |
+| 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；角色/资料补丁在事务内复核实际发起会话/服务 key、当前 owner、目标版本、最后 owner 与必需审计；CLI/兼容表单共用规则，删除与降权复用同事务保护；过期页面暂停写入要求刷新确认，缺版本禁写；[ADR-0025](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0025-atomic-member-updates.md) | 服务端仍只有 owner/admin/member；Viewer/Network Admin、Resource Scope、邀请通知、其他写点与完整账户生命周期未完成；历史无版本 API 不提供客户端 CAS，前端判断不代替后端授权 |
 | DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本保护；注册/更名/轮换/原生心跳与记录/服务共用事务型名称归属，同名新设备稳定分配别名；追加 state v24 及只读升级预检；[ADR-0024](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0024-dns-name-ownership.md) | 用户手工别名与已绑定域名迁移、复杂跨租户共享投影的持久名称预留、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
 | Route/Exit Node | 通告/审批与能力闸门；设备详情可撤销旧批准，路由与中继独立页面，读取故障显示未知并支持恢复 | 其他页面读取故障仍需复核；路由不等于访问授权，心跳不代表真实数据路径 |
 | 权限/ACL/Grants | 已交付统一 AST、规则/图/矩阵/组/高级/历史与模拟、Diff、自检、CAS 发布/恢复；实际 Compiler 解释，事务复查身份/审计，真实 Noise 下发；[网络控制台](../user/network-console.md) | 全语法/规模优化、虚拟滚动/分组折叠、完整细粒度 RBAC 与实时连通性；应用/特殊规则通过高级编辑而非无损未证实的图形转换 |
@@ -249,3 +249,11 @@ DNS 名称归属切片已开发并提交 Server `88d19ba`：同名新设备稳�
 未完成的手工别名、域名迁移、复杂共享名称预留、全 OS/宿主 DNS 见
 [本切片开发验收](../deployment/2026-10-10-dns-name-ownership.md)，不把局部归属事务
 当作整体注册审计或商业化完成。
+
+成员权限切片已提交 Server `d9ca3c8`、Web `02527c9`、Admin `3a19ff4`（仅验收
+脚本）。最终全量 Go build/vet/test/race、Web 180/Admin 37 单测和构建、三仓干净
+提交归档产物的 56 阶段手机组合回归、真实 CLI 原子审计与官方 Linux A/PTR/ICMP/
+重启验证通过。本切片无新迁移，**本轮未 SSH 或升级调试站**；累计 v23→24 升级
+预检、当前 CI 状态与未完成的细粒度角色/账户生命周期见
+[成员权限开发验收](../deployment/2026-10-11-atomic-member-updates.md)，不声称平台
+删除整体审计、全资源权限或全部产品已完成。
