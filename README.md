@@ -49,6 +49,11 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 最新初始化、独立租户 owner 原子开通、登录配置故障恢复与身份 v13 升级边界见
 [一次性初始化验收](docs/deployment/2026-10-10-atomic-owner-bootstrap.md)。
 
+访问权限优先：图形规则、策略关系图、权限矩阵、组、模拟解释、预览发布与版本恢复的
+使用步骤见[网络控制台手册](docs/user/network-console.md)；DNS、私有中继和手机侧栏
+与之一起交付，实施边界仍以台账和服务端测试为准，不表示全部商业化功能完成。
+本轮验证、state v19→21 与维护回退边界见[网络控制台验收](docs/deployment/2026-10-10-network-console.md)。
+
 ## 目录
 
 ```text

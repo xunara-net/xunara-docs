@@ -24,9 +24,9 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 |---|---|---|
 | Phase 0 架构基础 | 局部实现 | Headscale Adapter 及数据归属与原生控制面实现存在待决策差异；统一 API 类型生成、异步任务与跨组件一致性仍需补齐 |
 | Phase 1 MVP | 局部实现 | 核心注册/登录/设备/隔离/Free 配额已交付切片；完整账号生命周期与管理后台仍有缺口 |
-| Phase 2 网络产品 | 局部实现 | DNS 配置写入、实时拓扑、权限矩阵、Visual Policy 与 Policy Explain 未完成 |
+| Phase 2 网络产品 | 局部实现 | ACL 可视化/矩阵/解释、持久 DNS 与私有中继已交付本切片；大规模分组/虚拟化与实时路径遥测仍未完全闭环 |
 | Phase 3 商业化 | 未完成 | 套餐/配额不是支付系统；订阅、支付、账单及升降级工作流缺失 |
-| Phase 4 高级网络 | 局部实现 | 已有底层策略/网络能力，不等于完整服务组、策略模拟与实时诊断产品 |
+| Phase 4 高级网络 | 局部实现 | 已有策略模拟/解释与网络能力，不等于完整服务组、细粒度授权与实时诊断产品 |
 | Phase 5 自有客户端 | 未来阶段 | 官方 Tailscale 客户端继续是必需兼容目标，不强制自有客户端 |
 | Phase 6 网络平台生态 | 未来阶段 | 独立模块/插件化推进，不混入协议或复制旧实现 |
 
@@ -49,11 +49,11 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
 | 网络分配 | 池分配、自定义 CIDR 校验与冲突检测；[网络 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0005-tenant-network.md) | 地址迁移对既有设备的完整工作流、保留网络运维与 Adapter 对接 |
 | 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；邀请写入事务复核会话/角色并绑定审计，旧表单共用实现；[成员页面](https://github.com/xunara-net/xunara-web/blob/main/src/views/MembersView.vue)不再提供后端未支持的 viewer 选项 | 服务端目前只有 owner/admin/member；Viewer/Network Admin、Resource Scope、角色变更的并发/审计原子性与邀请通知未完成，前端判断不代替后端授权 |
-| DNS | 有客户端协议、读取与删除底座；[DNS 页面](https://github.com/xunara-net/xunara-web/blob/main/src/views/DNSView.vue) | 用户新增/编辑、解析器与 split DNS 的完整管理；不能因存在 DNS 页面认定可配置 |
-| Route/Exit Node | 有通告/审批与能力闸门；本轮路由页分开记录四类读取故障并允许恢复，未知不显示为零，托管中继与 Peer Relay 数据来源已分离 | 其他页面读取故障仍需复核；路由不等于访问授权，静态中继不在托管注册列表里，心跳不代表真实数据路径 |
-| 权限/ACL/Grants | 有底层解析、编译与测试；[策略引擎](https://github.com/xunara-net/xunara-server/tree/main/policy) | 统一 Visual Policy AST、七种编辑方式、矩阵、Diff/Explain/Simulator、策略版本回滚 |
+| DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本/名称保护；[ADR-0018](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0018-network-console.md) | 全注册/更名路径反向名称冲突检测、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
+| Route/Exit Node | 通告/审批与能力闸门；设备详情可撤销旧批准，路由与中继独立页面，读取故障显示未知并支持恢复 | 其他页面读取故障仍需复核；路由不等于访问授权，心跳不代表真实数据路径 |
+| 权限/ACL/Grants | 已交付统一 AST、规则/图/矩阵/组/高级/历史与模拟、Diff、自检、CAS 发布/恢复；实际 Compiler 解释，事务复查身份/审计，真实 Noise 下发；[网络控制台](../user/network-console.md) | 全语法/规模优化、虚拟滚动/分组折叠、完整细粒度 RBAC 与实时连通性；应用/特殊规则通过高级编辑而非无损未证实的图形转换 |
 | 拓扑与诊断 | 有节点视图及诊断底座 | 实时连接路径遥测与完整诊断未交付，不能把布局连线当作真实直连证据 |
-| 托管中继管理 | 后端注册/心跳/期望配置/删除；本轮[超管页面](https://github.com/xunara-net/xunara-admin/blob/main/src/views/RelaysView.vue)替换路线图占位，支持筛选与一次性令牌 | 用户侧私有中继页面、分组/地图/成本、计费统计、灰度/签名自动升级与回滚 |
+| 托管中继管理 | 超管管理与用户私有页、一次性令牌、期望配置/删除；本租户有效地图加入真实地区/pin，健康/近期心跳/启用/策略控制，官方 derphttp TLS pin 验证；[ADR-0019](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0019-managed-relay-map.md) | 公共跨租户发布、分组/成本/计费、配置 CAS/历史、灰度/签名自动升级；地图不是端口可达实测 |
 | 中继安全/一致性 | 准入与服务身份独立；本轮将令牌验证/配额检查/身份创建/令牌消费合并为同一事务，覆盖两个 SQLite 连接的竞争；[ADR-0013](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0013-atomic-relay-enrollment.md) | 注册审计仍在提交后执行，响应丢失的身份恢复及套餐修改竞争未闭环；心跳与其他历史读取的故障传播、租户/平台修改校验应继续对齐 |
 | 超管用户管理 | 查看、会话撤销、删除与最后 owner 保护切片 | 禁用/解禁、重置密码、覆盖额度、完整账户注销、独立超管人身份与恢复/告警工作流 |
 | 超管统计/套餐切换 | 本轮修复服务端字段到前端模型的映射，避免网段/额度/待审批统计丢失；修正套餐切换的请求字段，浏览器核对持久套餐结果 | 活跃用户/新增统计、真实健康/成本指标，不能填模拟数字 |
@@ -170,14 +170,29 @@ Web 只有确认有效登录配置后才启用入口；读取失败或畸形载�
 均未修改。初始占位用户播种、成功密码登录审计、第三方首次建号及完整恢复策略
 仍未闭环，不把本切片扩展为全部认证完成，也不将本地 OIDC 夹具当作公网配置。
 
+## 本轮网络控制台验证
+
+访问权限的统一 AST、可视化规则/策略图/矩阵/组/高级/历史与实际编译器解释，DNS
+持久设置/地址记录、用户私有中继及手机抽屉已交付本切片。Web 146 项、Admin 25 项
+单测与构建通过，最终产物下 34 阶段真实 API Chromium 零 JS 错误；真实 Noise 验证
+DNS/ACL 下发，官方 derphttp 验证 TLS pin。真实已发布 v19 二进制的隔离状态升级
+与完整 v19 恢复、原会话/中继凭据保留通过；不包装成生产回退或外部全 OS 实测。
+发布提交、全量/竞态回归和维护升级的实际边界见
+[网络控制台验收](../deployment/2026-10-10-network-console.md)。
+
+对应代码 CI 全绿后，调试站升级为 server `5cbccd3`、Web `15c232c`、Admin `9a10ca6`；
+两个活动租户 state v19→21、身份 v13，完整维护备份后校验原状态/配置/pin 保留、
+无隐式策略发布。公网匿名浏览器核对新产物哈希、登录门禁、移动布局、受保护 API
+401，以及授权平台只读契约。Relay `e703d35` 源码已发布，线上现有公共 Relay 不重启。
+
 ## 后续顺序
 
 1. 安全/一致性：补成功登录/注册审计与其他资源配额原子性，复核初始占位用户播种、历史元数据/身份读取和跨库可靠补偿，收敛跨面授权校验。
 2. 完整认证链路：补第三方首次建号事务、公网提供方/固定 HTTPS、多实例与恢复验收；
    先 Proposal 后实现邮箱验证、找回与 2FA，不把未验证邮箱作为身份键。
-3. 前端对等：继续收敛其他页面加载错误，补 DNS 写接口/表单、用户私有中继管理及完整 RBAC。
-4. 网络产品：按规格建立 Visual Policy AST/Compiler、矩阵、Explain/Diff/Simulator，
-   配套权限、审计、套餐闸门和回滚；再清理已对等旧模板。
+3. 前端对等：继续收敛其他页面加载错误、重复旧适配和完整 RBAC；DNS/权限/私有中继本轮闭环不重复开发。
+4. 网络产品：扩展规模分组/虚拟化、全语法无损编辑与客户端实测；复核 DNS 反向名称保护、
+   中继配置 CAS/历史与审计原子性；已对等旧写入保持薄兼容适配，不删必需客户端授权页。
 5. 商业化：订阅/账期/支付/账单/通知；不将套餐价格字段包装成已完成支付。
 6. 运维交付：生产 HTTPS、数据面/多租户/全 OS 兼容矩阵、灾备、Release/SBOM/签名。
 7. 自有客户端与未来生态按独立阶段推进，不把长期扩展全部塞入本次 MVP。

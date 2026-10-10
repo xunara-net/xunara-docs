@@ -15,6 +15,10 @@
 
 ## 认证方式
 
+ACL / Grants 预览、发布、模拟、矩阵、历史与 DNS / 私有中继管理的权威 API 定义见
+[服务端网络控制台说明](https://github.com/xunara-net/xunara-server/blob/main/docs/network-console.md)。
+持久版本不能绕过：预览不生效、版本冲突保留草稿，权限检查不等于连通性探测。
+
 ```text
 用户控制台   同源会话 Cookie（HttpOnly + SameSite=Lax）→ 必须由 nginx 同源部署
 自动化/工具  Authorization: Bearer <API key>（scope 限定）
