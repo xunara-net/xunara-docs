@@ -42,7 +42,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session | 持久会话、单个/批量撤销、事务审计；[撤销 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 多实例部署验收、完整设备/地点/最后活动登录记录；旧只读适配仍需逐步收敛 |
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
-| 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；密码存储故障不放行、不清 Cookie 或跳转初始化；[ADR-0016](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0016-password-login-consolidation.md) | 成功登录审计仍在提交后执行；其他旧元数据读取/写入仍需复核，不能据此宣称全部认证路径已失败关闭 |
+| 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；会话与两项必需成功审计已同事务提交，失败/零行写入不发凭据，旧 Cookie 保持；[ADR-0026](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0026-atomic-password-login-audit.md) | 失败事件可靠投递、其他认证方法/旧元数据读取写入、IP/User-Agent 与完整登录历史仍需闭环，不能据此宣称全部认证路径完成 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
 | OAuth/OIDC | 持久事务和提供方验证；正式 API 下浏览器入口与旧书签转接已消除 SPA 遮蔽，本地真实 RSA/JWKS/PKCE 同源浏览器验收通过；[登录代码](https://github.com/xunara-net/xunara-server/blob/main/control/login.go) | 公网提供方/固定 HTTPS 验收、第三方首次建号的配额/身份链接/审计原子性仍未闭环；夹具不等于生产第三方配置 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
@@ -228,7 +228,7 @@ race 重复 20 次通过；SSH 恢复后已完成控制面与两个后台的调�
 其运行时证据来自隔离组合测试，不冒充公共节点实测；见
 [中继运行时验收](../deployment/2026-10-10-relay-runtime-execution.md)。
 
-1. 安全/一致性：补成功登录/注册审计与其他资源配额原子性，复核初始占位用户播种、历史元数据/身份读取和跨库可靠补偿，收敛跨面授权校验。
+1. 安全/一致性：密码成功审计已同事务提交；继续补其他认证/首次建号与资源配额原子性，复核初始占位用户播种、历史元数据/身份读取和跨库可靠补偿，收敛跨面授权校验。
 2. 完整认证链路：补第三方首次建号事务、公网提供方/固定 HTTPS、多实例与恢复验收；
    先 Proposal 后实现邮箱验证、找回与 2FA，不把未验证邮箱作为身份键。
 3. 前端对等：继续收敛其他页面加载错误、重复旧适配和完整 RBAC；DNS/权限/私有中继本轮闭环不重复开发。
@@ -257,3 +257,19 @@ DNS 名称归属切片已开发并提交 Server `88d19ba`：同名新设备稳�
 预检、当前 CI 状态与未完成的细粒度角色/账户生命周期见
 [成员权限开发验收](../deployment/2026-10-11-atomic-member-updates.md)，不声称平台
 删除整体审计、全资源权限或全部产品已完成。
+
+## 最新实际部署：密码审计与累计 DNS/成员升级
+
+Server `0ab02aa` 已补本地密码会话与两项成功审计的事务提交，SQL 失败与忽略
+写入不发凭据，删除控制层重复日志，补中文说明。最终全量 Go build/vet/test/race、
+专项 race 三轮、Web 180/Admin 37 单测/构建、干净产物的 56 阶段手机回归与官方
+Linux 内部 A/PTR/ICMP/重启通过；真实已发布 v23 隔离状态的升级及成套恢复通过。
+
+对应代码 CI 全绿后，于 2026-10-11 06:33 维护升级调试站至 Server `0ab02aa`、
+Web `02527c9`、Admin `3a19ff4`（生产源码不变）。逐租户只读预检、停写一致性
+备份后，两租户 state v23→24，identity v13/plans v4 不变；原表原列、账号/旧
+会话/设备/网段/套餐/配置/pin 保留。未改生产角色、密码、IP 或 DNS 部署域名，
+未创建测试账号/设备，静态公共 Relay 不重启。公网匿名资产、登录门禁与手机
+布局及授权平台只读验收通过；TLS pin probe 为本机服务检查而非公网转发证明。
+备份、完整提交与未完成边界见
+[密码审计与累计升级验收](../deployment/2026-10-11-password-login-audit.md)。

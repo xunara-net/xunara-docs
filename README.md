@@ -73,7 +73,7 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 DNS 注册/更名与自定义记录的事务型名称归属及升级前只读检查见
 [服务端操作与隔离验收](https://github.com/xunara-net/xunara-server/blob/main/docs/dns-name-ownership.md)
 和 [ADR-0024](adr/README.md)。两台同名新设备分配稳定别名，旧碰撞不静默更名；
-Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管，本轮未升级调试站，见
+Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管；原开发验收当时未升级，见
 [DNS 名称归属开发验收](docs/deployment/2026-10-10-dns-name-ownership.md)。
 
 成员编辑现在使用版本确认和事务型权限/审计，过期页面不会自动覆盖；CLI 与
@@ -81,7 +81,12 @@ Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管，本轮未�
 [服务端成员管理](https://github.com/xunara-net/xunara-server/blob/main/docs/member-management.md)、
 [ADR-0025](adr/README.md)和
 [成员权限开发验收](docs/deployment/2026-10-11-atomic-member-updates.md)。仍只有三个
-现有角色，不把 Viewer/Network Admin 占位当作实现；本轮未升级调试站。
+现有角色，不把 Viewer/Network Admin 占位当作实现；该记录保留原开发时未上线边界。
+
+密码登录已补会话与两项成功审计的原子提交，删除控制层重复日志；原会话在故障
+时保持。本次连同 DNS 名称归属与成员保护完成调试站维护升级。干净产物、只读
+v23→24 预检、实际上线状态和剩余认证边界见
+[密码审计与累计升级验收](docs/deployment/2026-10-11-password-login-audit.md)。
 
 ## 目录
 
