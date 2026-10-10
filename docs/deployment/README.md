@@ -22,6 +22,10 @@
 
 ## 形态
 
+DNS 名称归属的新代码、真实客户端内部解析和 v23 升级预检验证见
+[DNS 开发验收](2026-10-10-dns-name-ownership.md)。此切片未更新调试站；下一次
+部署前必须逐租户审查名称冲突与完整备份，不能将开发验证当作线上 v24 已迁移。
+
 ```text
 单机 systemd     install.sh + systemd 单元 + nginx 同源站点
 Docker Compose   server + relay + web/nginx 三个容器 + 两个具名卷

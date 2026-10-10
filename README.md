@@ -70,6 +70,12 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 本轮官方 Linux 私网 ICMP/显式 IP 更新、51 阶段浏览器与调试站部署事实见
 [合法 IPv4 范围验收](docs/deployment/2026-10-10-flexible-ipv4.md)。
 
+DNS 注册/更名与自定义记录的事务型名称归属及升级前只读检查见
+[服务端操作与隔离验收](https://github.com/xunara-net/xunara-server/blob/main/docs/dns-name-ownership.md)
+和 [ADR-0024](adr/README.md)。两台同名新设备分配稳定别名，旧碰撞不静默更名；
+Linux 内部 A/PTR 查询实测不代表全 OS 或宿主 DNS 接管，本轮未升级调试站，见
+[DNS 名称归属开发验收](docs/deployment/2026-10-10-dns-name-ownership.md)。
+
 ## 目录
 
 ```text

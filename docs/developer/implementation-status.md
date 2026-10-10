@@ -49,7 +49,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
 | 网络分配 | 用户网段预览/版本保存、持久实际/期望收敛、单设备 IPv4 CAS、跨租户历史预留、保留段保护；合法 IPv4 不限 CGNAT 或 /16～/28，/31 /32 主机池与非标准兼容提示；[ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 旧 IP 保持；非标准范围不保证全部官方 OS/功能兼容；批量迁移/安全回收/扩容、关联 IP 配置自动迁移、IPv6 自定义及 Adapter 对接未闭环 |
 | 成员/角色 | 成员列表、owner-only 角色编辑与邀请 Web 工作流；邀请写入事务复核会话/角色并绑定审计，旧表单共用实现；[成员页面](https://github.com/xunara-net/xunara-web/blob/main/src/views/MembersView.vue)不再提供后端未支持的 viewer 选项 | 服务端目前只有 owner/admin/member；Viewer/Network Admin、Resource Scope、角色变更的并发/审计原子性与邀请通知未完成，前端判断不代替后端授权 |
-| DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本/名称保护；[ADR-0018](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0018-network-console.md) | 全注册/更名路径反向名称冲突检测、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
+| DNS | 已交付持久设置、MagicDNS/解析器/搜索域/split、A/AAAA 新增编辑删除、版本保护；注册/更名/轮换/原生心跳与记录/服务共用事务型名称归属，同名新设备稳定分配别名；追加 state v24 及只读升级预检；[ADR-0024](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0024-dns-name-ownership.md) | 用户手工别名与已绑定域名迁移、复杂跨租户共享投影的持久名称预留、真实客户端 DNS 全 OS 验收；不伪造未实现的 DoH/DoT/TXT/CNAME 管理 |
 | Route/Exit Node | 通告/审批与能力闸门；设备详情可撤销旧批准，路由与中继独立页面，读取故障显示未知并支持恢复 | 其他页面读取故障仍需复核；路由不等于访问授权，心跳不代表真实数据路径 |
 | 权限/ACL/Grants | 已交付统一 AST、规则/图/矩阵/组/高级/历史与模拟、Diff、自检、CAS 发布/恢复；实际 Compiler 解释，事务复查身份/审计，真实 Noise 下发；[网络控制台](../user/network-console.md) | 全语法/规模优化、虚拟滚动/分组折叠、完整细粒度 RBAC 与实时连通性；应用/特殊规则通过高级编辑而非无损未证实的图形转换 |
 | 拓扑与诊断 | 有节点视图及诊断底座 | 实时连接路径遥测与完整诊断未交付，不能把布局连线当作真实直连证据 |
@@ -232,7 +232,7 @@ race 重复 20 次通过；SSH 恢复后已完成控制面与两个后台的调�
 2. 完整认证链路：补第三方首次建号事务、公网提供方/固定 HTTPS、多实例与恢复验收；
    先 Proposal 后实现邮箱验证、找回与 2FA，不把未验证邮箱作为身份键。
 3. 前端对等：继续收敛其他页面加载错误、重复旧适配和完整 RBAC；DNS/权限/私有中继本轮闭环不重复开发。
-4. 网络产品：扩展规模分组/虚拟化、全语法无损编辑与客户端实测；复核 DNS 反向名称保护、
+4. 网络产品：扩展规模分组/虚拟化、全语法无损编辑与客户端实测；扩展 DNS 名称/域名管理与全 OS 验收、
    多维度中继流量策略、公开发布与外部数据面；已交付运行时/回执不重复开发，旧写入保持薄兼容适配，不删必需客户端授权页。
 5. 商业化：订阅/账期/支付/账单/通知；不将套餐价格字段包装成已完成支付。
 6. 运维交付：生产 HTTPS、数据面/多租户/全 OS 兼容矩阵、灾备、Release/SBOM/签名。
@@ -240,3 +240,12 @@ race 重复 20 次通过；SSH 恢复后已完成控制面与两个后台的调�
 
 每项以小而可审查的提交记录实际验证结果，GitHub 使用真实组织 `xunara-net`，
 保留必要兼容入口；不在根旧仓继续写新实现、不删除用户状态或历史迁移。
+
+DNS 名称归属切片已开发并提交 Server `88d19ba`：同名新设备稳定分配、注册/更名/
+轮换/心跳与记录/服务写入同事务复核；追加 state v24，提供不迁移数据库的 CLI
+预检，旧无冲突名称与 IP 保持。最终本地全量 build/vet/test/race、51 阶段真实 API
+手机浏览器与干净提交归档产物再次验证通过；官方 Linux 1.102.2 内部 A/PTR、在线
+更名、WireGuard ICMP 和控制面重启通过。**本轮没有升级调试站**，CI/部署边界及
+未完成的手工别名、域名迁移、复杂共享名称预留、全 OS/宿主 DNS 见
+[本切片开发验收](../deployment/2026-10-10-dns-name-ownership.md)，不把局部归属事务
+当作整体注册审计或商业化完成。
