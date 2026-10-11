@@ -1,5 +1,10 @@
 # 部署
 
+账号禁用 / 解禁已随 identity v16 上线原自签 HTTPS 测试站，state/plans 不变。
+全部旧控制面必须停止后升级，不能混版本滚动部署；禁用不冻结设备或独立中继。
+原数据与 43 个会话、真实手机预览、隔离写入 / 故障 / 重启和 upstream Noise
+证据见[账号状态验收](2026-10-11-account-suspension.md)。
+
 登录与注册的 owner/平台配置入口已随 identity v15 追加迁移上线自签 HTTPS 测试站，
 state/plans 不变；注册策略保持，未配置假应用。产物、原数据保留、跨分区失败回退、
 浏览器与 upstream Noise 证据见[登录配置验收](2026-10-11-authentication-settings.md)。

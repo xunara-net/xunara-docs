@@ -40,6 +40,10 @@ MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [第三方登录](docs/user/third-party-login.md)；不代表公网应用已经配置。
 成员邀请码与 OAuth2/OIDC 现在可在用户中心和超管后台管理，无需编辑部署文件；
 入口、权限、公开开户与邀请的区别见[登录与注册设置](docs/user/authentication-settings.md)。
+平台账号禁用 / 解禁及最后启用 owner 的保护见[账号禁用手册](docs/admin/account-suspension.md)；
+解禁要求重新登录，在线设备和独立中继不因人类账号状态而被停用。
+本轮 identity v16、隔离真实写入与原站只读上线的事实见
+[账号状态验收](docs/deployment/2026-10-11-account-suspension.md)。
 实际 HTTPS 测试站升级、完整回退及数据保留见
 [登录配置验收](docs/deployment/2026-10-11-authentication-settings.md)。
 本轮清理、浏览器与官方 Linux 客户端的实测边界见
