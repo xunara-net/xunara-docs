@@ -36,3 +36,5 @@ JSON 包含已保存的资料、绑定展示属性、通行密钥名称 / 时间
 [服务端说明](https://github.com/xunara-net/xunara-server/blob/main/docs/account-security-export.md)
 和 [ADR-0033](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0033-account-security-export.md)
 为准；不要将可下载文件视为完整运维备份。
+本轮源码、真实隔离附件回归和原自签 HTTPS 调试站升级证据见
+[个人导出验收](../deployment/2026-10-11-account-export.md)；原站没有代为导出你的资料。

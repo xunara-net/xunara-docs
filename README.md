@@ -39,6 +39,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 公网只读验证与原会话保留见[登录记录验收](docs/deployment/2026-10-11-login-history.md)。
 个人设置的本人安全资料 JSON / 成功登录记录 CSV 使用与隐私边界见
 [个人导出手册](docs/user/account-export.md)，不代表整个网络或全部个人数据导出。
+现已无新迁移升级原自签 HTTPS 调试站；源码、真实附件回归、原会话 / 历史保留
+与公网只读证据见[个人导出验收](docs/deployment/2026-10-11-account-export.md)。
 平台辅助的一次性密码恢复见[用户手册](docs/user/password-recovery.md)与
 [管理员手册](docs/admin/password-recovery.md)。邮箱验证、自动邮件找回与 2FA 仍是
 待开发功能，不以规格规划代替当前能力。
