@@ -35,6 +35,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 和 [ADR 索引](adr/README.md)（ADR-0009、ADR-0010、ADR-0011）。
 本人成功登录记录、首次来源 / 客户端线索、最近活动与手机卡片见
 [登录记录手册](docs/user/login-history.md)和 ADR-0032；不包含失败尝试或地理定位。
+现已随 identity v18 上线原自签 HTTPS 调试站；源码、真实旧版升级 / 成套回退、
+公网只读验证与原会话保留见[登录记录验收](docs/deployment/2026-10-11-login-history.md)。
 平台辅助的一次性密码恢复见[用户手册](docs/user/password-recovery.md)与
 [管理员手册](docs/admin/password-recovery.md)。邮箱验证、自动邮件找回与 2FA 仍是
 待开发功能，不以规格规划代替当前能力。
