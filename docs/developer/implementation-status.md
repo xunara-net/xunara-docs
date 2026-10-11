@@ -36,12 +36,13 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 
 | 模块 | 现状与证据 | 尚缺事项 |
 |---|---|---|
-| 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/导出工作流、通知与账户生命周期 |
+| 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/完整网络与个人导出、通知与账户生命周期 |
 | 密码/邀请/注册模式 | 本地密码注册与 OIDC 邀请加入均原子提交成员额度、账户、身份链接、邀请、会话和必需审计；未知 OIDC 身份遵守 invite/closed；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 管理员其他创建点仍需复核；邮件投递、邮箱验证、自动邮件找回、验证码及完整恢复策略未完成 |
 | 平台辅助密码恢复 | 人工核实、版本保护、一次性仅哈希码；密码替换 / 消耗码 / 全部原人类会话撤销 / 必需审计同事务；跨连接竞争、失败关闭、两端 UI 与真实隔离 HTTPS 重启验收；[ADR-0031](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0031-platform-password-recovery.md) | 独立超管人身份 / MFA、可靠核实流程的运营交付、邮件通知 / 自动邮件恢复、完整账号接管处置仍缺；不改变设备 / 服务凭据或绑定 |
 | 初始化与独立租户 owner | 已实现一次性完成事实、内置 owner 认领、密码、会话和必需审计的同事务提交；故障零部分身份、允许重试，删除密码或残留证明不能重新开通；[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 初始占位用户播种仍非本事务；平台组织/套餐跨库可靠补偿、响应丢失恢复及完整账号恢复未完成 |
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
-| Session / 本人登录记录 | 持久会话与事务撤销；成功记录独立于 Session GC，所有新认证来源 IP / 有界 UA、分钟单调活动、旧事实回填、轮换区别、本人分页和手机卡片；[ADR-0032](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0032-account-login-history.md) | 失败尝试 / 可信设备证明 / 地理位置、自动保留 / 导出、完整多实例部署验收未完成；旧只读适配仍需收敛 |
+| Session / 本人登录记录 | 持久会话与事务撤销；成功记录独立于 Session GC，所有新认证来源 IP / 有界 UA、分钟单调活动、旧事实回填、轮换区别、本人分页和手机卡片；[ADR-0032](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0032-account-login-history.md) | 失败尝试 / 可信设备证明 / 地理位置、自动保留、完整多实例部署验收未完成；旧只读适配仍需收敛 |
+| 本人账户安全导出 | JSON 安全资料 / CSV 成功记录，单租户本人白名单快照、活动会话复核、日期区间、行数 / 文本 / 文件上限及必需准备审计；手机折叠入口、隐私确认与取消 / Blob 清理；[ADR-0033](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0033-account-security-export.md) | 完整个人 / 网络数据、设备 / ACL / DNS / Routes 导出、异步大规模导出和自动保留仍未实现；准备不证明用户保存文件 |
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
 | 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；会话与两项必需成功审计已同事务提交，失败/零行写入不发凭据，旧 Cookie 保持；本切片补成功记录 / 来源；[ADR-0026](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0026-atomic-password-login-audit.md) | 失败事件可靠投递、其他认证方法/旧元数据读取写入与完整登录监测仍需复核，不能据此宣称全部认证路径完成 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
@@ -349,3 +350,23 @@ Cookie / 人类 Bearer / gRPC 共用 context 使用路径，数据库条件实�
 验收、备份和兼容边界见[登录记录验收](../deployment/2026-10-11-login-history.md)。
 失败尝试、自动历史保留 / 导出、邮箱验证 / 邮件找回、2FA、完整注销 / 全局
 账号、订阅支付、公网提供方 / 多实例 / 全 OS 仍未完成，不重复开发已交付记录。
+
+## 最新开发：本人账户安全资料导出
+
+个人设置新增折叠的 JSON 安全资料 / CSV 成功记录，明确私人保管确认，日期按
+浏览器时区包含结束当天。单租户本人白名单读取与准备审计同事务，发起会话 /
+启用用户复核，行数 / 读取文本 / 文件上限、持久限流与忽略写入失败关闭；
+超限整份拒绝，不把分页首屏当完整历史。失败、取消、离页或异常响应不下载，
+Blob URL 清理，私人内容不入持久存储；导出不是可信硬件或网络备份。
+
+本地最终 Go build / vet / 全量 test / race、Web 263 / Admin 51 单测与构建、
+78 阶段跨模块 / 26 阶段真实 HTTPS 下载与故障回归通过，页面 JS 错误为零。
+真实已发布 v18 同 schema 兼容 / 旧产物读取 / 成套恢复保留 45 张原表事实；
+原 v17→18 / 拒绝新库 / 成套恢复仍通过，保留 44 张原表事实，均为隔离临时状态。
+CSV 报表不是无损导入，危险文本可见前缀不替代任意表格软件的安全验收。
+
+本切片无新迁移，保持 identity v18 / state v24 / plans v4、官方协议和套餐。
+发布 CI 与原站升级另行确认；尚未在原站导出任何真实用户私人资料，也不将
+上述隔离写入当作生产操作。设备 / 网络 / ACL / DNS / Routes 的完整导出、
+自动保留、注销、邮件 / 2FA / 支付仍未交付。使用与权限边界见
+[个人导出手册](../user/account-export.md)及 [ADR-0033](../../adr/README.md)。
