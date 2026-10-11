@@ -36,6 +36,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 平台辅助的一次性密码恢复见[用户手册](docs/user/password-recovery.md)与
 [管理员手册](docs/admin/password-recovery.md)。邮箱验证、自动邮件找回与 2FA 仍是
 待开发功能，不以规格规划代替当前能力。
+平台辅助密码恢复已随 identity v17 上线原自签 HTTPS 调试站；提交、隔离写入、
+公网只读预览和原数据保留见[密码恢复验收](docs/deployment/2026-10-11-password-recovery.md)。
 MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [账户与网络入门](docs/user/account-onboarding.md)；未配置真实提供方时不宣称生产第三方登录可用。
 原生 OAuth2（GitHub/GitLab/Gitea/通用 S256）与 OIDC 共用的绑定、邀请和解绑见
@@ -44,7 +46,7 @@ MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 入口、权限、公开开户与邀请的区别见[登录与注册设置](docs/user/authentication-settings.md)。
 平台账号禁用 / 解禁及最后启用 owner 的保护见[账号禁用手册](docs/admin/account-suspension.md)；
 解禁要求重新登录，在线设备和独立中继不因人类账号状态而被停用。
-本轮 identity v16、隔离真实写入与原站只读上线的事实见
+账号状态切片 identity v16、隔离真实写入与原站只读上线的事实见
 [账号状态验收](docs/deployment/2026-10-11-account-suspension.md)。
 实际 HTTPS 测试站升级、完整回退及数据保留见
 [登录配置验收](docs/deployment/2026-10-11-authentication-settings.md)。
