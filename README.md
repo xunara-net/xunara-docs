@@ -36,6 +36,8 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 邮箱验证、密码找回与 2FA 仍是待开发功能，不以规格规划代替当前能力。
 MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [账户与网络入门](docs/user/account-onboarding.md)；未配置真实提供方时不宣称生产第三方登录可用。
+原生 OAuth2（GitHub/GitLab/Gitea/通用 S256）与 OIDC 共用的绑定、邀请和解绑见
+[第三方登录](docs/user/third-party-login.md)；不代表公网应用已经配置。
 本轮清理、浏览器与官方 Linux 客户端的实测边界见
 [通行密钥迁移与账户认证收敛验收](docs/deployment/2026-10-09-passkey-account-consolidation.md)。
 
