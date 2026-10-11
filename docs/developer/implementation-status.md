@@ -63,7 +63,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 超管用户管理 | 查看 / 筛选、版本保护的禁用 / 解禁、状态 + 会话撤销 + 必需审计原子提交；平台辅助密码重置；密码 / 外部 / Passkey、HTTP / gRPC 与委托 API 权限遵守状态，解禁不恢复旧会话，删除 / 降权保护最后启用 owner；[ADR-0030](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0030-account-suspension.md) | 自动邮件恢复、覆盖额度、完整账户注销、独立超管人身份与恢复/告警工作流；禁用不是网络冻结，机器 / 中继不变 |
 | 超管统计/套餐切换 | 本轮修复服务端字段到前端模型的映射，避免网段/额度/待审批统计丢失；修正套餐切换的请求字段，浏览器核对持久套餐结果 | 活跃用户/新增统计、真实健康/成本指标，不能填模拟数字 |
 | 审计与事件 | 有账户/平台/中继操作审计与既有事件能力 | 逐操作原子性审查、统一来源、导出/筛选、可靠异步投递与告警 |
-| 部署与运维 | 有同源 nginx、systemd/Compose、备份与回滚路径；[部署仓库](https://github.com/xunara-net/xunara-deploy) | 固定 HTTPS、安全多实例、可恢复演练、签名/SBOM/兼容 Release 自动化 |
+| 部署与运维 | 有同源 nginx、systemd/Compose、备份与回滚路径；单端口 HTTP 安全导航升级到同租户 HTTPS、明文 API/回调/凭据拒绝、原站 TLS 默认保留，已隔离验证并只更新原站入口；[ADR-0034](https://github.com/xunara-net/xunara-deploy/blob/main/docs/adr/ADR-0034-http-https-entry.md) | 受信任公网 CA / 续期、完整 Compose TLS、安全多实例、整套发布回退、签名/SBOM/兼容 Release 自动化仍未闭环 |
 | 旧扩展模块 | 服务、共享、Reach/Flux、TKA 等源码与测试仍在服务端 | 尚未本轮逐个完整复核；单测通过不替代新规格产品对等及安全验收 |
 
 ## 阅读与审查范围

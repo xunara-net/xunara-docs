@@ -49,6 +49,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0031](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0031-platform-password-recovery.md) | 人工核实的一次性密码重置、原子兑换与平台入口 | xunara-server | Accepted | 2026-10-11 |
 | [ADR-0032](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0032-account-login-history.md) | 独立成功登录记录、可信来源规则与持久分钟活动 | xunara-server | Accepted | 2026-10-11 |
 | [ADR-0033](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0033-account-security-export.md) | 本人安全资料白名单快照、私有下载与必需准备审计 | xunara-server | Accepted | 2026-10-11 |
+| [ADR-0034](https://github.com/xunara-net/xunara-deploy/blob/main/docs/adr/ADR-0034-http-https-entry.md) | HTTP/HTTPS 共用入口、精确导航升级与 TLS 安装保护 | xunara-deploy | Accepted | 2026-10-11 |
 
 ## 模板
 
