@@ -1,5 +1,10 @@
 # 部署
 
+登录与注册的 owner/平台配置入口已随 identity v15 追加迁移上线自签 HTTPS 测试站，
+state/plans 不变；注册策略保持，未配置假应用。产物、原数据保留、跨分区失败回退、
+浏览器与 upstream Noise 证据见[登录配置验收](2026-10-11-authentication-settings.md)。
+运行时凭据需同时备份密封密钥；API/升级顺序以服务端手册和 Deploy README 为准。
+
 MagicDNS 首次初始化、账户级 OIDC 绑定/解绑与第三方邀请注册新增 identity v14，
 state v24、plans v4 不变。先升级服务端再部署 Web；旧二进制不能直接读取新身份库，
 完整停止写入备份后才升级。操作与实际配置边界以

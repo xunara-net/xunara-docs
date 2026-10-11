@@ -44,7 +44,8 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 认证故障 | 本轮区分无效凭据与存储故障，HTTP/gRPC 失败关闭，Web 故障页保留地址与 Cookie；[ADR-0012](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0012-authentication-storage-failures.md) | 其他只读/历史登录入口的错误传播继续逐调用点复核，不能宣称全存储错误已收敛 |
 | 密码登录收敛 | JSON/兼容 HTML 共用限流、类型化身份读取、bcrypt 与事务型本地会话；会话与两项必需成功审计已同事务提交，失败/零行写入不发凭据，旧 Cookie 保持；[ADR-0026](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0026-atomic-password-login-audit.md) | 失败事件可靠投递、其他认证方法/旧元数据读取写入、IP/User-Agent 与完整登录历史仍需闭环，不能据此宣称全部认证路径完成 |
 | Passkey | 已实现 Web 注册/登录/删除切片；[迁移 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0011-passkey-web-and-auth-consolidation.md) | 正式 HTTPS 域名验收、凭据恢复与完整 2FA；Passkey 不等于已实现 2FA |
-| OAuth/OIDC | OIDC 的 state/nonce/PKCE/ID Token 验证；原生 GitHub/GitLab/Gitea/通用 OAuth2 的授权码+S256+固定当前用户接口；共用持久事务、绑定/解绑、同会话、来源会话撤销、最后方法与邀请门禁；不按邮箱合并、不持久化外部 token；真实本地 OIDC 和 OAuth2 浏览器夹具；[OAuth2 边界](https://github.com/xunara-net/xunara-server/blob/main/docs/oauth2-login.md) | 公网提供方/HTTPS 尚需实际配置验收；LinuxDO S256 未确认、QQ/微信原生扫码未实现；第三方自动独立租户、managed 租户 IdP 编辑、全局跨租户账户尚未完成，夹具不等于生产配置 |
+| OAuth/OIDC | OIDC 的 state/nonce/PKCE/ID Token 验证；原生 GitHub/GitLab/Gitea/通用 OAuth2 的授权码+S256+固定当前用户接口；共用持久事务、绑定/解绑、同会话、来源会话撤销、最后方法与邀请门禁；不按邮箱合并、不持久化外部 token；真实本地 OIDC 和 OAuth2 浏览器夹具；[OAuth2 边界](https://github.com/xunara-net/xunara-server/blob/main/docs/oauth2-login.md) | 公网提供方应用及可信 HTTPS 尚需配置验收；LinuxDO S256 未确认、QQ/微信原生扫码未实现；第三方自动独立租户、全局跨租户账户尚未完成，夹具不等于生产配置 |
+| 登录与注册配置 | owner Web/平台 Admin 管理任意目标租户（含 managed）的成员准入与 OAuth2/OIDC 创建、启停、密钥轮换、归档；公开开户单独平台权限；持久版本 CAS、身份域不可变、密封 secret、公网 HTTPS 出站保护、旧事务取消与最后方法保护；[ADR-0029](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0029-runtime-authentication-settings.md) | 需真实第三方应用凭据与公网验收；配置编辑不等于第三方自动开独立租户、独立超管人身份或完整账号恢复；多实例数据库竞争测试不替代完整多实例部署验收 |
 | 设备与官方兼容 | 注册/审批/节点列表/路由底座与协议集成测试；[兼容 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0002-client-compatibility.md) | 全 OS/版本矩阵、持续外部双客户端验收及完整设备生命周期 |
 | 套餐/Entitlement | 动态目录与资源闸门；[套餐 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0004-entitlements.md)；本轮后台补中继额度编辑 | 超额状态/提醒、所有并发创建点的原子性复核、账期/订阅事实与支付回调 |
 | 网络分配 | 用户网段预览/版本保存、持久实际/期望收敛、单设备 IPv4 CAS、跨租户历史预留、保留段保护；合法 IPv4 不限 CGNAT 或 /16～/28，/31 /32 主机池与非标准兼容提示；[ADR-0023](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0023-flexible-ipv4-allocation.md) | 旧 IP 保持；非标准范围不保证全部官方 OS/功能兼容；批量迁移/安全回收/扩容、关联 IP 配置自动迁移、IPv6 自定义及 Adapter 对接未闭环 |
@@ -273,3 +274,16 @@ Web `02527c9`、Admin `3a19ff4`（生产源码不变）。逐租户只读预检�
 布局及授权平台只读验收通过；TLS pin probe 为本机服务检查而非公网转发证明。
 备份、完整提交与未完成边界见
 [密码审计与累计升级验收](../deployment/2026-10-11-password-login-audit.md)。
+
+## 最新切片：登录与注册的持久管理
+
+Server `acd1930`、Web `82919d1`、Admin `66d2d32` 已上线原自签 HTTPS 测试站，
+两活动租户 identity v14→15；state v24/plans v4、原账号/设备/网络/配置与中继保持。
+新增 owner/平台入口、成员策略与公开开户分离、运行时 OAuth2/OIDC 编辑、密封
+secret、CAS/审计/旧授权取消/最后方法保护；无密钥 OIDC 配置补真实保存和恢复。
+
+最终 Go build/vet/test/race、Web 195/Admin 42、68 阶段回归和 6 阶段 HTTPS/邀请/
+开户/密钥/手机验收通过。公网页面、权限、静态产物、CA/安全 Cookie 和 upstream
+Noise 探测通过；一个测试登录已撤销，旧数据逐项保留。未改变生产准入或申请
+真实第三方应用，具体失败回退、备份、证据及未完成范围见
+[登录配置验收](../deployment/2026-10-11-authentication-settings.md)。

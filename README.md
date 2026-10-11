@@ -38,6 +38,10 @@ MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [账户与网络入门](docs/user/account-onboarding.md)；未配置真实提供方时不宣称生产第三方登录可用。
 原生 OAuth2（GitHub/GitLab/Gitea/通用 S256）与 OIDC 共用的绑定、邀请和解绑见
 [第三方登录](docs/user/third-party-login.md)；不代表公网应用已经配置。
+成员邀请码与 OAuth2/OIDC 现在可在用户中心和超管后台管理，无需编辑部署文件；
+入口、权限、公开开户与邀请的区别见[登录与注册设置](docs/user/authentication-settings.md)。
+实际 HTTPS 测试站升级、完整回退及数据保留见
+[登录配置验收](docs/deployment/2026-10-11-authentication-settings.md)。
 本轮清理、浏览器与官方 Linux 客户端的实测边界见
 [通行密钥迁移与账户认证收敛验收](docs/deployment/2026-10-09-passkey-account-consolidation.md)。
 

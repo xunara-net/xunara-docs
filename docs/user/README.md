@@ -21,6 +21,7 @@
 | 拓扑 | `/topology` | 设备布局视图；尚非实时连接路径遥测 |
 | 权限 | `/permissions` | 可视化规则、策略关系图、矩阵、组、高级策略、测试原因、发布与版本恢复 |
 | 成员 | `/members` | 组织成员与角色、所有者专用邀请面板 |
+| 登录与注册 | `/authentication` | 所有者管理成员注册与第三方应用；[操作手册](authentication-settings.md) |
 | DNS | `/dns` | 地址记录新增/编辑/删除、MagicDNS、解析器、搜索域与分流 |
 | 我的中继 | `/relays` | 私有中继、真实下发地图、一次性接入令牌与安全安装指引 |
 | 路由 | `/routes` | Subnet Router / Exit Node 审批与状态 |
