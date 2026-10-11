@@ -37,7 +37,8 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 模块 | 现状与证据 | 尚缺事项 |
 |---|---|---|
 | 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/导出工作流、通知与账户生命周期 |
-| 密码/邀请/注册模式 | 本地密码注册与 OIDC 邀请加入均原子提交成员额度、账户、身份链接、邀请、会话和必需审计；未知 OIDC 身份遵守 invite/closed；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 管理员其他创建点仍需复核；邮件投递、邮箱验证、找回、验证码及完整恢复策略未完成 |
+| 密码/邀请/注册模式 | 本地密码注册与 OIDC 邀请加入均原子提交成员额度、账户、身份链接、邀请、会话和必需审计；未知 OIDC 身份遵守 invite/closed；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 管理员其他创建点仍需复核；邮件投递、邮箱验证、自动邮件找回、验证码及完整恢复策略未完成 |
+| 平台辅助密码恢复 | 人工核实、版本保护、一次性仅哈希码；密码替换 / 消耗码 / 全部原人类会话撤销 / 必需审计同事务；跨连接竞争、失败关闭、两端 UI 与真实隔离 HTTPS 重启验收；[ADR-0031](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0031-platform-password-recovery.md) | 独立超管人身份 / MFA、可靠核实流程的运营交付、邮件通知 / 自动邮件恢复、完整账号接管处置仍缺；不改变设备 / 服务凭据或绑定 |
 | 初始化与独立租户 owner | 已实现一次性完成事实、内置 owner 认领、密码、会话和必需审计的同事务提交；故障零部分身份、允许重试，删除密码或残留证明不能重新开通；[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 初始占位用户播种仍非本事务；平台组织/套餐跨库可靠补偿、响应丢失恢复及完整账号恢复未完成 |
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session | 持久会话、单个/批量撤销、事务审计；[撤销 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0010-account-session-revocation.md) | 多实例部署验收、完整设备/地点/最后活动登录记录；旧只读适配仍需逐步收敛 |
@@ -58,7 +59,7 @@ M1–M49 与新规范 Phase 0–6 不是同一套完成定义，不能从前者�
 | 中继安全/一致性 | 准入与服务身份独立；原子注册；心跳按 token hash 在同事务复查身份/撤销、报告/遥测/服务审计一起提交，存储故障 503；新进程不能凭缓存授权，旧进程无报告清为未知 | 注册审计仍在提交后执行，响应丢失的身份恢复及套餐修改竞争未闭环；其他历史读取的故障传播、租户/平台修改校验应继续对齐 |
 | 默认/非托管中继 | 首屏来源与端口，固定官方 HTTPS 导入草稿、手工地图、CAS/事务审计/历史恢复、碰撞双向保护与租户策略合并 | 外部节点不受远程托管，不伪造健康/回执；官方公共接纳和外部数据面仍须实测 |
 | 中继预编译 | [v0.1.0-preview.1](https://github.com/xunara-net/xunara-relay/releases/tag/v0.1.0-preview.1) 七种真实二进制、SHA256SUMS/BUILD.txt、用户直接下载入口 | 已编译/校验不等于全 OS 运行验收；无 Windows 服务安装器、Apple 签名/公证、签名更新或自动升级 |
-| 超管用户管理 | 查看 / 筛选、版本保护的禁用 / 解禁、状态 + 会话撤销 + 必需审计原子提交；密码 / 外部 / Passkey、HTTP / gRPC 与委托 API 权限遵守状态，解禁不恢复旧会话，删除 / 降权保护最后启用 owner；[ADR-0030](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0030-account-suspension.md) | 重置密码、覆盖额度、完整账户注销、独立超管人身份与恢复/告警工作流；禁用不是网络冻结，机器 / 中继不变 |
+| 超管用户管理 | 查看 / 筛选、版本保护的禁用 / 解禁、状态 + 会话撤销 + 必需审计原子提交；平台辅助密码重置；密码 / 外部 / Passkey、HTTP / gRPC 与委托 API 权限遵守状态，解禁不恢复旧会话，删除 / 降权保护最后启用 owner；[ADR-0030](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0030-account-suspension.md) | 自动邮件恢复、覆盖额度、完整账户注销、独立超管人身份与恢复/告警工作流；禁用不是网络冻结，机器 / 中继不变 |
 | 超管统计/套餐切换 | 本轮修复服务端字段到前端模型的映射，避免网段/额度/待审批统计丢失；修正套餐切换的请求字段，浏览器核对持久套餐结果 | 活跃用户/新增统计、真实健康/成本指标，不能填模拟数字 |
 | 审计与事件 | 有账户/平台/中继操作审计与既有事件能力 | 逐操作原子性审查、统一来源、导出/筛选、可靠异步投递与告警 |
 | 部署与运维 | 有同源 nginx、systemd/Compose、备份与回滚路径；[部署仓库](https://github.com/xunara-net/xunara-deploy) | 固定 HTTPS、安全多实例、可恢复演练、签名/SBOM/兼容 Release 自动化 |
@@ -303,3 +304,21 @@ state v24/plans v4、历史迁移、原用户 / 凭据 / 绑定 / 设备 / 网�
 及 43 个原会话无变化。解禁不恢复旧会话，委托 API 权限暂停但 key 不自动撤销，
 不把人类禁用当作网络冻结。具体备份、原数据保留与未完成范围见
 [账号状态验收](../deployment/2026-10-11-account-suspension.md)。
+
+## 最新切片：平台辅助密码恢复
+
+平台核实持有人、填写原因及核对版本后可生成一次性重置码；用户在所属网络的
+独立表单输入码和新密码。生成不改变密码或登录；兑换将密码替换、码消耗、
+该账号原浏览器会话撤销与必需审计同事务提交，不按未验证邮箱定位账号。
+持久码只有哈希，单用户 / 单租户 / 短有效期；重新生成、改密、状态变更或删除
+使旧码失效。两端结果未知不自动重试，原码关闭 / 离页清除。
+
+本地最终 Go build / vet / test / 全量 race、Web 199 / Admin 51 单测和构建、
+68 阶段综合浏览器与 15 阶段隔离真实 HTTPS 通过。实际写入、审计故障零部分
+提交、跨连接竞争与真实进程重启由隔离夹具验证，不在原站重置既有密码。
+identity 仅追加新迁移，state/plans、设备、中继、绑定和套餐规则保持。
+使用与边界见[用户手册](../user/password-recovery.md)、
+[平台手册](../admin/password-recovery.md)及 [ADR-0031](../../adr/README.md)。
+
+这不是自动邮件找回、2FA、独立超管身份、可靠通知或完整账户接管恢复。
+实际 CI 与上线记录另行验收，不从本地测试推断线上已经升级。

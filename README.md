@@ -33,7 +33,9 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 
 账户资料、改密、批量退出与通行密钥的已实现边界见 [用户手册](docs/user/README.md#账号安全)
 和 [ADR 索引](adr/README.md)（ADR-0009、ADR-0010、ADR-0011）。
-邮箱验证、密码找回与 2FA 仍是待开发功能，不以规格规划代替当前能力。
+平台辅助的一次性密码恢复见[用户手册](docs/user/password-recovery.md)与
+[管理员手册](docs/admin/password-recovery.md)。邮箱验证、自动邮件找回与 2FA 仍是
+待开发功能，不以规格规划代替当前能力。
 MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [账户与网络入门](docs/user/account-onboarding.md)；未配置真实提供方时不宣称生产第三方登录可用。
 原生 OAuth2（GitHub/GitLab/Gitea/通用 S256）与 OIDC 共用的绑定、邀请和解绑见

@@ -46,6 +46,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 | [ADR-0028](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0028-oauth2-human-login.md) | 原生 OAuth2 与持久认证链、绑定和邀请共用 | xunara-server | Accepted | 2026-10-11 |
 | [ADR-0029](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0029-runtime-authentication-settings.md) | 注册策略与 OAuth2/OIDC 应用的持久管理、版本与密钥保护 | xunara-server | Accepted | 2026-10-11 |
 | [ADR-0030](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0030-account-suspension.md) | 平台账号禁用、原子会话撤销与最后启用 owner 保护 | xunara-server | Accepted | 2026-10-11 |
+| [ADR-0031](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0031-platform-password-recovery.md) | 人工核实的一次性密码重置、原子兑换与平台入口 | xunara-server | Accepted | 2026-10-11 |
 
 ## 模板
 
