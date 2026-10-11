@@ -125,6 +125,12 @@ Linux 客户端、完整竞态与回退边界见
 
 ## 目录
 
+设备/私有中继参数化安装、分层健康与核心导航见
+[用户手册](docs/user/network-console.md#设备接入与中继诊断)及 [ADR-0035/0036](adr/README.md)。
+安装前置条件以 [relay 手册](https://github.com/xunara-net/xunara-relay/blob/main/docs/private-relay-install.md)为准。
+源码、安装器产物、83 场景及调试站状态保持见
+[2026-10-12 核心设备验收](docs/deployment/2026-10-12-device-core.md)。
+
 ```text
 specs/          规格全文（长期规范、补充规范、PROJECT_SPEC、身份登录、Roadmap、参考来源）
 adr/            架构决策索引（正文随各仓库 docs/adr/ 维护）

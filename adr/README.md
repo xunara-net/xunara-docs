@@ -76,6 +76,11 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 （需要跟进的工作）
 ```
 
+## 核心网络补充（2026-10-12）
+
+- [ADR-0035：设备连接报告与核心导航](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0035-device-connection-details.md)，Accepted。
+- [ADR-0036：参数化接入与分层中继健康](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0036-private-relay-install-and-health.md)，Accepted。
+
 ## 待补 ADR（候选）
 
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。
