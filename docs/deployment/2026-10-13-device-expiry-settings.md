@@ -30,7 +30,10 @@
 
 Web CI [38282760548](https://github.com/xunara-net/xunara-web/actions/runs/38282760548)通过。
 Server CI [38282919157](https://github.com/xunara-net/xunara-server/actions/runs/38282919157)
-包含完整 build/vet/test/race，结果在最终交付前复核。
+完整 build/vet/test/race 全部通过，最终交付前已复核源码提交与各检查结果。
+文档验收首提交 `445429cfd5e50c541ee664e161700669f03db62a` 的
+CI [38284760664](https://github.com/xunara-net/xunara-docs/actions/runs/38284760664)通过；
+本次追加仅确认最终源码 CI，不改变运行产物。
 
 ## 安全发布与现场
 
