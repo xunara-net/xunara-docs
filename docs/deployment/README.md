@@ -1,5 +1,10 @@
 # 部署
 
+设备立即过期、短期 Token 与私有接入脚本已上线；主域已使用用户提供的受信任
+正式证书，其他租户域名保留原 SNI 链，默认 Relay 不换证书。最终源码/CI、
+原数据保留和系统根/官方 Noise 验证见
+[设备接入与正式证书验收](2026-10-12-device-enrollment-production-tls.md)。证书尚无自动续期。
+
 HTTP 页面导航与 HTTPS 正式入口已共用同一套控制中心；精确 Host 与安全导航门禁、
 默认保留 TLS、隔离安装器回退，以及原站只更新 nginx 的证据见
 [HTTP/HTTPS 共用入口验收](2026-10-11-http-https-entry.md)。正式登录、API 与客户端

@@ -399,12 +399,15 @@ Server `0ad7c29`、Web `bab7996`、Admin `bc0056d` 对应 CI 全绿后，于
 事务化，跨连接不能复用一次性凭据或超额；满额已有机器仍可合法重新认证。
 旧 v1/HTML 是同一实现的适配，不混用非原子写路径；v1 Cookie 写新增 CSRF。
 
-本地全量 Go build/vet/test/race 通过（control race 808.379s），Web 396/Admin 51
+本地最终全量 Go build/vet/test/race 通过（control race 967.810s），Web 396/Admin 51
 单测/类型/构建及 95 阶段隔离真实 API 浏览器通过，页面 JS 错误为零；覆盖
 真实上游 Noise 注册→过期 Map→重新认证、故障回滚、手机确认和秘密清理。
 不新增迁移，state 24/identity 18/plans 4、官方协议和 Entitlement 规则保持。
 Linux 脚本执行是隔离 mock 安装/CLI，并非真实软件包安装；Windows/macOS 未
-现场执行，不冒充全平台完成。本轮正式站维护与 CI 状态在最终部署记录补齐。
+现场执行，不冒充全平台完成。Server a9292d4/Web 9c5ddf9/Admin 877e22a 最终 CI
+通过并已上线，原账号/会话/设备/配置保持。主域替换为受信任正式证书，其他
+租户 SNI 保留，Core/Relay 不因证书重启；尚未配置自动续期。完整维护与公网
+系统根/Noise 证据见[最终上线记录](../deployment/2026-10-12-device-enrollment-production-tls.md)。
 存量 Vite/Vitest 等开发依赖 npm audit 有 6 条告警（3 moderate/1 high/2 critical），
 未在此任务强制升级或开启公网开发服务；新增 Node 类型只用于开发测试。
 边界与使用以[服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)

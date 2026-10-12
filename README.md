@@ -1,5 +1,10 @@
 # xunara-docs
 
+设备立即过期与 Token 接入已上线，主域改用正式受信任证书；原账户、会话、
+设备与默认 Relay 保持。部署提交、最终 CI、95 阶段浏览器及系统根/官方 Noise
+验证见[最新上线记录](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
+单域证书不覆盖其他租户，自动续期尚未配置。
+
 同端口 HTTP 页面安全导航与 HTTPS 正式入口共用，未知 Host、明文 API/回调/凭据
 明确拒绝；前端升级默认保留原 TLS。16 阶段隔离测试、原站 44 个 HTTP 探测、
 四档匿名手机布局、上游 Noise 与全部原凭据保留见
@@ -129,7 +134,8 @@ Linux 客户端、完整竞态与回退边界见
 [用户手册](docs/user/network-console.md#设备接入与中继诊断)、
 [服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)
 及 [ADR-0038](adr/README.md)。原子额度/消费、真实 SDK Noise、95 阶段浏览器和
-平台现场边界在[实施状态](docs/developer/implementation-status.md#2026-10-12设备过期与-token-接入切片)记录。
+平台现场边界在[实施状态](docs/developer/implementation-status.md#2026-10-12设备过期与-token-接入切片)记录；
+最终上线与证书范围见[设备接入验收](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
 
 直接路由审批、冲突草稿、客户端本地出口说明和真实状态见
 [用户手册](docs/user/network-console.md#路由与出口)及
