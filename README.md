@@ -125,6 +125,12 @@ Linux 客户端、完整竞态与回退边界见
 
 ## 目录
 
+直接路由审批、冲突草稿、客户端本地出口说明和真实状态见
+[用户手册](docs/user/network-console.md#路由与出口)及
+[服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/route-management.md)。
+最终源码/CI、90 阶段隔离验证和原账号/会话/中继保留的正式调试升级见
+[路由与出口验收](docs/deployment/2026-10-12-route-management.md)。
+
 设备/私有中继参数化安装、分层健康与核心导航见
 [用户手册](docs/user/network-console.md#设备接入与中继诊断)及 [ADR-0035/0036](adr/README.md)。
 安装前置条件以 [relay 手册](https://github.com/xunara-net/xunara-relay/blob/main/docs/private-relay-install.md)为准。
