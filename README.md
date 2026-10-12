@@ -1,5 +1,9 @@
 # xunara-docs
 
+添加设备进一步简化为单一复制：显式选 Token 才直接带密钥，高级参数折叠，
+删除旧隐藏输入与设备脚本分支。最终 402 项 Web / 96 阶段手机、剪贴板回归及
+正式站只更新前端的证据见[简洁接入验收](docs/deployment/2026-10-12-simplified-device-enrollment.md)。
+
 设备立即过期与 Token 接入已上线，主域改用正式受信任证书；原账户、会话、
 设备与默认 Relay 保持。部署提交、最终 CI、95 阶段浏览器及系统根/官方 Noise
 验证见[最新上线记录](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
