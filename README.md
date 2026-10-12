@@ -125,6 +125,12 @@ Linux 客户端、完整竞态与回退边界见
 
 ## 目录
 
+设备列表/详情立即过期、短期设备 Token 与显式私有一键脚本见
+[用户手册](docs/user/network-console.md#设备接入与中继诊断)、
+[服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)
+及 [ADR-0038](adr/README.md)。原子额度/消费、真实 SDK Noise、95 阶段浏览器和
+平台现场边界在[实施状态](docs/developer/implementation-status.md#2026-10-12设备过期与-token-接入切片)记录。
+
 直接路由审批、冲突草稿、客户端本地出口说明和真实状态见
 [用户手册](docs/user/network-console.md#路由与出口)及
 [服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/route-management.md)。

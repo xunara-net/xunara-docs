@@ -389,3 +389,23 @@ Server `0ad7c29`、Web `bab7996`、Admin `bc0056d` 对应 CI 全绿后，于
 设备 / 网络 / ACL / DNS / Routes 的完整导出、
 自动保留、注销、邮件 / 2FA / 支付仍未交付。使用与权限边界见
 [个人导出手册](../user/account-export.md)及 [ADR-0033](../../adr/README.md)。
+
+## 2026-10-12：设备过期与 Token 接入切片
+
+设备列表和详情补立即过期，身份/有效期摘要、持久管理员/凭据、只改 expiry、
+必需审计/通知同事务。旧客户端缩短有效期或补充公钥不能恢复已过期设备。
+添加设备支持短期一次性 Auth Key、已有密钥、隐藏输入 file: 命令和 Linux 私有
+一键脚本下载，手机仍浏览器接入。签发/消费/设备计数/新建或轮换及必需审计
+事务化，跨连接不能复用一次性凭据或超额；满额已有机器仍可合法重新认证。
+旧 v1/HTML 是同一实现的适配，不混用非原子写路径；v1 Cookie 写新增 CSRF。
+
+本地全量 Go build/vet/test/race 通过（control race 808.379s），Web 396/Admin 51
+单测/类型/构建及 95 阶段隔离真实 API 浏览器通过，页面 JS 错误为零；覆盖
+真实上游 Noise 注册→过期 Map→重新认证、故障回滚、手机确认和秘密清理。
+不新增迁移，state 24/identity 18/plans 4、官方协议和 Entitlement 规则保持。
+Linux 脚本执行是隔离 mock 安装/CLI，并非真实软件包安装；Windows/macOS 未
+现场执行，不冒充全平台完成。本轮正式站维护与 CI 状态在最终部署记录补齐。
+存量 Vite/Vitest 等开发依赖 npm audit 有 6 条告警（3 moderate/1 high/2 critical），
+未在此任务强制升级或开启公网开发服务；新增 Node 类型只用于开发测试。
+边界与使用以[服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)
+及 [ADR-0038](../../adr/README.md)为准，不代表长期产品功能全部完成。
