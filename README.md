@@ -1,12 +1,16 @@
 # xunara-docs
 
+设备「有效期设置」已上线：定时/指定时间、永不过期、立即过期和30分钟临时
+续期，当前节点密钥与 Token TTL 分离。Go 全量 race、435 项 Web 单测与100阶段
+最终隔离浏览器及安全发布见[最新有效期验收](docs/deployment/2026-10-13-device-expiry-settings.md)。
+
 添加设备进一步简化为单一复制：显式选 Token 才直接带密钥，高级参数折叠，
 删除旧隐藏输入与设备脚本分支。最终 402 项 Web / 96 阶段手机、剪贴板回归及
 正式站只更新前端的证据见[简洁接入验收](docs/deployment/2026-10-12-simplified-device-enrollment.md)。
 
 设备立即过期与 Token 接入已上线，主域改用正式受信任证书；原账户、会话、
 设备与默认 Relay 保持。部署提交、最终 CI、95 阶段浏览器及系统根/官方 Noise
-验证见[最新上线记录](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
+验证见[设备接入与证书验收](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
 单域证书不覆盖其他租户，自动续期尚未配置。
 
 同端口 HTTP 页面安全导航与 HTTPS 正式入口共用，未知 Host、明文 API/回调/凭据
@@ -134,12 +138,18 @@ Linux 客户端、完整竞态与回退边界见
 
 ## 目录
 
-设备列表/详情立即过期、短期设备 Token 与显式私有一键脚本见
+设备列表/详情有效期设置、短期设备 Token 与显式含 Token 的简短命令见
 [用户手册](docs/user/network-console.md#设备接入与中继诊断)、
 [服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)
 及 [ADR-0038](adr/README.md)。原子额度/消费、真实 SDK Noise、95 阶段浏览器和
 平台现场边界在[实施状态](docs/developer/implementation-status.md#2026-10-12设备过期与-token-接入切片)记录；
 最终上线与证书范围见[设备接入验收](docs/deployment/2026-10-12-device-enrollment-production-tls.md)。
+
+单设备「有效期设置」支持定时/指定时间、关闭过期、立即过期与已过期设备
+30 分钟临时续期，见[用户手册](docs/user/network-console.md#设备接入与中继诊断)
+及 [ADR-0039](adr/README.md)。不改变网络默认认证周期，接口/时间边界以
+[服务端契约](https://github.com/xunara-net/xunara-server/blob/main/docs/device-enrollment.md)为准。
+最新版本、事务/手机回归与安全上线见[有效期设置验收](docs/deployment/2026-10-13-device-expiry-settings.md)。
 
 直接路由审批、冲突草稿、客户端本地出口说明和真实状态见
 [用户手册](docs/user/network-console.md#路由与出口)及

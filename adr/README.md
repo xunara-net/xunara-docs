@@ -82,6 +82,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 - [ADR-0036：参数化接入与分层中继健康](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0036-private-relay-install-and-health.md)，Accepted。
 - [ADR-0037：路由与出口事务闭环](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0037-route-management.md)，Accepted。
 - [ADR-0038：设备过期与预授权接入事务闭环](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0038-device-expiry-and-token-enrollment.md)，Accepted。
+- [ADR-0039：单设备有效期管理](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0039-device-expiry-settings.md)，Accepted（2026-10-13）；定时/关闭/临时恢复共用权限、CAS 与事务，不修改网络默认认证周期。
 
 ## 待补 ADR（候选）
 

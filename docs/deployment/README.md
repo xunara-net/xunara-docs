@@ -325,6 +325,7 @@ sudo XUNARA_ORG_CONFIG=/etc/xunara/orgs.json \
 
 ## 相关文档
 
+- 单设备定时/关闭过期与临时续期：[2026-10-13 验收记录](2026-10-13-device-expiry-settings.md)
 - 安装/升级/回滚：[xunara-deploy README](https://github.com/xunara-net/xunara-deploy/blob/main/README.md)
 - 运维（备份、灾备、灰度）：[docs/operations/README.md](../operations/README.md)
 - 安全前提：[docs/security/README.md](../security/README.md)
