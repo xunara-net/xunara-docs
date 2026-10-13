@@ -84,6 +84,10 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 - [ADR-0038：设备过期与预授权接入事务闭环](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0038-device-expiry-and-token-enrollment.md)，Accepted。
 - [ADR-0039：单设备有效期管理](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0039-device-expiry-settings.md)，Accepted（2026-10-13）；定时/关闭/临时恢复共用权限、CAS 与事务，不修改网络默认认证周期。
 
+## 平台管理补充（2026-10-13）
+
+- [ADR-0040：独立平台身份与多通行密钥](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0040-platform-passkey-administration.md)，Accepted（2026-10-13）；独立平台身份/会话、多凭据绑定与事务解绑，用户创建不混用公开注册。
+
 ## 待补 ADR（候选）
 
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。

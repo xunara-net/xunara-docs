@@ -79,6 +79,9 @@ MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 本轮清理、浏览器与官方 Linux 客户端的实测边界见
 [通行密钥迁移与账户认证收敛验收](docs/deployment/2026-10-09-passkey-account-consolidation.md)。
 
+[平台添加用户与多通行密钥手册](docs/admin/platform-administrator.md)记录成员创建与管理员安全入口，
+不把单一运营者身份包装成多管理员 RBAC。
+
 当前能力、真实缺口、源码审查范围与按风险排序的后续工作统一记录在
 [实现与审查台账](docs/developer/implementation-status.md)。历史里程碑、页面路由或
 接口存在不代表新规格的全部功能完成；手册中的目标模型应与台账一并阅读。
