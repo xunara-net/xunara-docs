@@ -90,5 +90,7 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 
 ## 待补 ADR（候选）
 
+- [ADR-0041：共享控制台、多 IPv4 池与接入保护](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0041-shared-console-and-multiple-ipv4-pools.md)，Accepted（2026-10-13）；网页与控制面地址分离，不伪造 VLAN 或服务端自动改变 Quad100。
+
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。
 - 内嵌 console 删除与服务端只提供 API 的最终形态（ADR-0003 的收尾）。

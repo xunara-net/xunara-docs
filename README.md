@@ -1,5 +1,9 @@
 # xunara-docs
 
+免费开户网页改用可选的主域名独立网络路径；新增多 IPv4 地址池和 Linux 接入前
+只读冲突保护。测试证据、非 VLAN / Quad100 自动换址 / 独立客户端 DNS/TLS 边界见
+[注册与网络安全验收](docs/deployment/2026-10-13-shared-console-network-safety.md)。
+
 设备「有效期设置」已上线：定时/指定时间、永不过期、立即过期和30分钟临时
 续期，当前节点密钥与 Token TTL 分离。Go 全量 race、435 项 Web 单测与100阶段
 最终隔离浏览器及安全发布见[最新有效期验收](docs/deployment/2026-10-13-device-expiry-settings.md)。

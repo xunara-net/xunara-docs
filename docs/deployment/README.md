@@ -1,5 +1,8 @@
 # 部署
 
+免费注册网页跳转/再次登录、多 IPv4 池与 Linux 冲突检查见
+[本次验收与边界](2026-10-13-shared-console-network-safety.md)；共享网页不替代独立客户端 DNS/TLS。
+
 最新添加设备交互只需复制一条短命令，显式 Token 直接带入，高级选项折叠；
 删除旧设备脚本而保留私有中继流程。最终源码/CI、96 阶段隔离回归与原正式 TLS/
 数据/服务保持见[简洁设备接入验收](2026-10-12-simplified-device-enrollment.md)。
