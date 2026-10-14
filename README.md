@@ -1,5 +1,9 @@
 # xunara-docs
 
+超管改为直接重置随机临时密码，用户首次登录必须本人改密；旧码流程不再混用。
+源码、最终回归及待发布 / 正式部署状态见
+[随机密码恢复验收](docs/deployment/2026-10-14-platform-random-password-reset.md)。
+
 免费开户网页改用可选的主域名独立网络路径；新增多 IPv4 地址池和 Linux 接入前
 只读冲突保护。测试证据、非 VLAN / Quad100 自动换址 / 独立客户端 DNS/TLS 边界见
 [注册与网络安全验收](docs/deployment/2026-10-13-shared-console-network-safety.md)。
@@ -63,11 +67,11 @@ Xunara 玄序的**文档中心**：规范、架构、ADR、API、运维、安全
 [个人导出手册](docs/user/account-export.md)，不代表整个网络或全部个人数据导出。
 现已无新迁移升级原自签 HTTPS 调试站；源码、真实附件回归、原会话 / 历史保留
 与公网只读证据见[个人导出验收](docs/deployment/2026-10-11-account-export.md)。
-平台辅助的一次性密码恢复见[用户手册](docs/user/password-recovery.md)与
+超管随机临时密码恢复与本人首次强制改密见[用户手册](docs/user/password-recovery.md)与
 [管理员手册](docs/admin/password-recovery.md)。邮箱验证、自动邮件找回与 2FA 仍是
 待开发功能，不以规格规划代替当前能力。
-平台辅助密码恢复已随 identity v17 上线原自签 HTTPS 调试站；提交、隔离写入、
-公网只读预览和原数据保留见[密码恢复验收](docs/deployment/2026-10-11-password-recovery.md)。
+旧重置码流程已由 ADR-0042 替代，原 v17 发布记录留作历史证据：
+[旧密码恢复验收](docs/deployment/2026-10-11-password-recovery.md)。
 MagicDNS 首次启用、第三方绑定/解绑与 OIDC 邀请加入见
 [账户与网络入门](docs/user/account-onboarding.md)；未配置真实提供方时不宣称生产第三方登录可用。
 原生 OAuth2（GitHub/GitLab/Gitea/通用 S256）与 OIDC 共用的绑定、邀请和解绑见

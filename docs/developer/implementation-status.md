@@ -55,7 +55,7 @@ Linux 私有中继固定版安装与身份保留升级、实际本地 TLS 健康
 |---|---|---|
 | 组织与独立 tailnet | 已实现自助开通切片；[自助租户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0007-self-service-tenancy.md)；各租户独立状态、网络分配与会话 | 注销/完整网络与个人导出、通知与账户生命周期 |
 | 密码/邀请/注册模式 | 本地密码注册与 OIDC 邀请加入均原子提交成员额度、账户、身份链接、邀请、会话和必需审计；未知 OIDC 身份遵守 invite/closed；[ADR-0027](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0027-account-onboarding-and-magicdns.md) | 管理员其他创建点仍需复核；邮件投递、邮箱验证、自动邮件找回、验证码及完整恢复策略未完成 |
-| 平台辅助密码恢复 | 人工核实、版本保护、一次性仅哈希码；密码替换 / 消耗码 / 全部原人类会话撤销 / 必需审计同事务；跨连接竞争、失败关闭、两端 UI 与真实隔离 HTTPS 重启验收；[ADR-0031](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0031-platform-password-recovery.md) | 独立超管人身份 / MFA、可靠核实流程的运营交付、邮件通知 / 自动邮件恢复、完整账号接管处置仍缺；不改变设备 / 服务凭据或绑定 |
+| 平台辅助密码恢复 | 超管直接重置随机临时密码，立即撤销原人类会话；后端强制本人首次改密；核实 / CAS / 审计同事务，新旧码流程不混用；[ADR-0042](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0042-platform-random-password-reset.md) | 可靠核实 / 通知的运营交付、自动邮件恢复、完整 MFA / 账号接管处置仍缺；不撤销设备 / 服务凭据或绑定 |
 | 初始化与独立租户 owner | 已实现一次性完成事实、内置 owner 认领、密码、会话和必需审计的同事务提交；故障零部分身份、允许重试，删除密码或残留证明不能重新开通；[ADR-0017](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0017-atomic-owner-bootstrap.md) | 初始占位用户播种仍非本事务；平台组织/套餐跨库可靠补偿、响应丢失恢复及完整账号恢复未完成 |
 | 账户资料与改密 | 已实现切片；[账户 ADR](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0009-account-self-service.md) | 联系邮箱仍是未验证属性，不能用来合并身份或找回密码 |
 | Session / 本人登录记录 | 持久会话与事务撤销；成功记录独立于 Session GC，所有新认证来源 IP / 有界 UA、分钟单调活动、旧事实回填、轮换区别、本人分页和手机卡片；[ADR-0032](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0032-account-login-history.md) | 失败尝试 / 可信设备证明 / 地理位置、自动保留、完整多实例部署验收未完成；旧只读适配仍需收敛 |
@@ -323,7 +323,7 @@ state v24/plans v4、历史迁移、原用户 / 凭据 / 绑定 / 设备 / 网�
 不把人类禁用当作网络冻结。具体备份、原数据保留与未完成范围见
 [账号状态验收](../deployment/2026-10-11-account-suspension.md)。
 
-## 最新切片：平台辅助密码恢复
+## 历史切片：平台辅助重置码（已由 ADR-0042 替代）
 
 平台核实持有人、填写原因及核对版本后可生成一次性重置码；用户在所属网络的
 独立表单输入码和新密码。生成不改变密码或登录；兑换将密码替换、码消耗、

@@ -92,6 +92,9 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 
 - [ADR-0041：共享控制台、多 IPv4 池与接入保护](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0041-shared-console-and-multiple-ipv4-pools.md)，Accepted（2026-10-13）；网页与控制面地址分离，不伪造 VLAN 或服务端自动改变 Quad100。
 
+## 人工账户恢复（2026-10-14）
+- [ADR-0042：超管直接重置随机临时密码](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0042-platform-random-password-reset.md)，Accepted（2026-10-14）；替代 ADR-0031 的重置码流程，首次本人改密由后端强制，独立机器 / 服务身份不变。
+
 ## 待补 ADR（候选）
 
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。
