@@ -95,6 +95,11 @@ Proposed → Accepted → （Deprecated | Superseded by ADR-NNNN）
 ## 人工账户恢复（2026-10-14）
 - [ADR-0042：超管直接重置随机临时密码](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0042-platform-random-password-reset.md)，Accepted（2026-10-14）；替代 ADR-0031 的重置码流程，首次本人改密由后端强制，独立机器 / 服务身份不变。
 
+## 公开开户与默认网段（2026-10-14）
+
+[ADR-0043：公开开户名称唯一与用户默认网段](https://github.com/xunara-net/xunara-server/blob/main/docs/adr/ADR-0043-public-signup-uniqueness-and-default-network.md)，
+Accepted（2026-10-14）；组织注册表 v2 防止同名副本，不合并旧身份，不改官方客户端 wire。
+
 ## 待补 ADR（候选）
 
 - 前端 API 类型从 OpenAPI 生成（web/admin/client 共享 Domain Layer）。

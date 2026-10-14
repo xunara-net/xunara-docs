@@ -1,5 +1,10 @@
 # xunara-docs
 
+公开开户用户名改为数据库约束的全平台唯一；旧重复账户保留。用户可设置默认
+网段或把附加池设为默认；使用与客户端地址的未完成边界见
+[开户与默认网段](docs/user/signup-and-default-network.md)。
+测试与发布边界见[本轮验收](docs/deployment/2026-10-14-signup-and-default-network.md)。
+
 超管改为直接重置随机临时密码，用户首次登录必须本人改密；旧码流程不再混用。
 源码、最终回归、正式升级与自有隔离账号实测见
 [随机密码恢复验收](docs/deployment/2026-10-14-platform-random-password-reset.md)。
